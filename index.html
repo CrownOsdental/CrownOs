@@ -3,536 +3,495 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neura Works | Your Clinic's Custom Branded App & Management Platform</title>
-
-  <link rel="icon" type="image/png" href="favicon.png" sizes="48x48">
-  <link rel="apple-touch-icon" href="favicon.png">
-
-  <meta name="description" content="Neura Work provides dental clinics with their own custom-branded patient app and a unified management platform. Automate recalls, eliminate no-shows, and streamline communication.">
-  <meta name="keywords" content="Dental SaaS, custom dental app, white label dental software, patient recall system, reduce no-shows, practice management, WhatsApp automation, dental CRM">
-  <meta name="author" content="Neura Works">
-  <meta property="og:site_name" content="Neura Work">
-  <meta property="og:title" content="Neura Works | Your Clinic's Custom App & Software">
-  <meta property="og:image" content="favicon.png">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Neura Works",
-    "url": "https://neuraworks11.github.io/Neura-Works/",
-    "logo": "https://neuraworks11.github.io/Neura-Works/favicon.png"
-  }
-  </script>
+  <title>NeuraWorks | The Operating System for Modern Dentistry</title>
+  <meta name="description" content="Complete Dental SaaS. Billing, Invoicing, WhatsApp Automation, and your own Custom Branded Patient App.">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-    
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     :root {
-        /* Updated Palette based on App Screenshots */
-        --primary-navy: #0F172A;  /* Strong headings */
-        --primary-blue: #007BFF;   /* Primary action buttons/accents */
-        --bg-white: #FFFFFF;       /* Main background */
-        --bg-light: #F8FAFC;       /* Secondary background sections */
-        --text-gray: #64748B;      /* Body text */
-        --whatsapp-green: #25D366; /* WhatsApp specific */
-        --app-header-blue: #1e40af; /* A slightly deeper blue for app headers */
+        /* Palette extracted from your screenshots */
+        --brand-navy: #0F172A;
+        --brand-blue: #2563EB;   /* Action Blue */
+        --brand-green: #10B981;  /* WhatsApp/Success */
+        --brand-red: #F43F5E;    /* Pending/Alerts */
+        --bg-light: #F8FAFC;
     }
 
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: var(--bg-white);
-        color: var(--primary-navy);
-    }
-
-    /* --- UTILITIES --- */
-    .text-primary-navy { color: var(--primary-navy); }
-    .text-accent { color: var(--primary-blue); }
-    .bg-accent { background-color: var(--primary-blue); }
-    .bg-light-section { background-color: var(--bg-light); }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--brand-navy); background: #ffffff; }
 
     /* --- ANIMATIONS --- */
-    @keyframes slide-up-fade {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-on-scroll {
-        opacity: 0; /* Hidden by default */
-    }
-    .animate-on-scroll.in-view {
-        animation: slide-up-fade 0.8s ease-out forwards;
-    }
+    .fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; transform: translateY(20px); }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    
     .delay-100 { animation-delay: 0.1s; }
     .delay-200 { animation-delay: 0.2s; }
     .delay-300 { animation-delay: 0.3s; }
 
-    /* --- WHATSAPP FAB --- */
-    .whatsapp-fab {
-        position: fixed; bottom: 25px; right: 25px; z-index: 1000;
-        background-color: var(--whatsapp-green); color: white;
-        padding: 14px; border-radius: 50%;
-        box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
-        transition: all 0.3s ease;
-    }
-    .whatsapp-fab:hover { transform: scale(1.1) rotate(10deg); }
-
-    /* =========================================
-       CUSTOM PHONE MOCKUP & BRANDING ANIMATION
-    ========================================= */
-    .phone-mockup {
-        width: 300px;
-        height: 600px;
-        background-color: #000;
-        border-radius: 45px;
-        padding: 12px;
+    /* --- INTERACTIVE PHONE MOCKUP --- */
+    .phone-frame {
+        border: 8px solid #1E293B; border-radius: 40px; overflow: hidden;
         box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        position: relative;
-        margin: auto;
-        border: 4px solid #333;
-    }
-    /* Phone Notch */
-    .phone-mockup::before { 
-        content: ''; position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-        width: 100px; height: 24px; background-color: #000; border-radius: 0 0 16px 16px; z-index: 20;
-    }
-    .phone-screen {
-        width: 100%; height: 100%;
-        background-color: #F1F5F9; /* Light app background */
-        border-radius: 35px; overflow: hidden; position: relative;
+        transition: all 0.4s ease; background: #fff;
     }
     
-    /* The Animated App Header */
-    .app-header-bar {
-        padding: 45px 20px 20px 20px; /* Padding for notch */
-        display: flex; align-items: center; color: white;
-        /* Define the animation cycle */
-        animation: brandSwitch 12s infinite;
-    }
-    .clinic-logo-placeholder {
-        width: 32px; height: 32px; background-color: rgba(255,255,255,0.3);
-        border-radius: 8px; margin-right: 12px; display: grid; place-items: center;
-    }
-    .clinic-name-text::after {
-        content: 'NeuraWorks Demo'; /* Default text */
-        animation: textSwitch 12s infinite; font-weight: 700; font-size: 1.1rem;
-    }
+    /* Dynamic Branding Classes */
+    .theme-blue .app-header { background: #2563EB; }
+    .theme-blue .app-accent { color: #2563EB; }
+    .theme-blue .app-btn { background: #2563EB; }
+    
+    .theme-green .app-header { background: #059669; }
+    .theme-green .app-accent { color: #059669; }
+    .theme-green .app-btn { background: #059669; }
+    
+    .theme-purple .app-header { background: #7C3AED; }
+    .theme-purple .app-accent { color: #7C3AED; }
+    .theme-purple .app-btn { background: #7C3AED; }
 
-    /* Keyframes for switching colors and text */
-    @keyframes brandSwitch {
-        0%, 30%  { background-color: var(--primary-blue); } /* NeuraWorks Blue */
-        33%, 63% { background-color: #059669; } /* Clinic Green */
-        66%, 96% { background-color: #7C3AED; } /* Clinic Purple */
-        100%     { background-color: var(--primary-blue); }
+    /* --- TAB SYSTEM --- */
+    .tab-btn.active {
+        background-color: #EFF6FF; color: #2563EB; border-color: #2563EB;
     }
-    @keyframes textSwitch {
-        0%, 30%  { content: 'NeuraWorks Demo'; }
-        33%, 63% { content: 'Smile Care Dental'; }
-        66%, 96% { content: 'City Orthodontics'; }
-        100%     { content: 'NeuraWorks Demo'; }
-    }
-
-    /* Simplified App Content placeholders */
-    .app-content-mockup { padding: 20px; }
-    .mockup-card { background: white; padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .mockup-line { height: 10px; background-color: #E2E8F0; border-radius: 5px; margin-bottom: 8px; }
-    .mockup-line.short { width: 60%; }
+    .tab-content { display: none; animation: fadeIn 0.4s ease; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   </style>
 </head>
 <body class="antialiased">
-    
-    <a href="https://wa.me/919264248108" target="_blank" class="whatsapp-fab" aria-label="Chat on WhatsApp">
-        <i data-lucide="message-circle" class="w-7 h-7"></i>
+
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 relative">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 30 C20 10, 40 10, 50 25 C60 10, 80 10, 80 30 C80 60, 65 80, 50 90 C35 80, 20 60, 20 30 Z" stroke="#0F172A" stroke-width="6" fill="white"/>
+                            <path d="M35 35 L45 35 M30 45 L45 45 M35 55 L45 55 M55 35 L65 35 M55 45 L70 45 M55 55 L65 55" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+                            <circle cx="30" cy="45" r="2" fill="#0F172A"/>
+                            <circle cx="70" cy="45" r="2" fill="#0F172A"/>
+                            <path d="M50 25 L50 90" stroke="#0F172A" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <span class="text-2xl font-bold tracking-tight text-slate-900">NW's</span>
+                </div>
+
+                <div class="hidden md:flex space-x-8 items-center text-sm font-semibold text-slate-600">
+                    <a href="#features" class="hover:text-blue-600 transition">Features</a>
+                    <a href="#custom-app" class="hover:text-blue-600 transition">Your App</a>
+                    <a href="#about" class="hover:text-blue-600 transition">About Us</a>
+                    <a href="https://wa.me/919264248108" class="px-5 py-2.5 bg-brand-blue text-white rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-500/20">
+                        Book Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-20 overflow-hidden bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-16">
+            
+            <div class="flex-1 text-center lg:text-left z-10">
+                <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6 fade-up">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
+                    SaaS for Dental Clinics
+                </div>
+                <h1 class="text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight mb-6 fade-up delay-100">
+                    Your Clinic. <br>
+                    <span class="text-blue-600">Your Own App.</span> <br>
+                    Total Control.
+                </h1>
+                <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 fade-up delay-200">
+                    NeuraWorks isn't just software. We build your clinic's digital infrastructure. Automate billing, follow-ups, and reminders while giving your patients a <strong>premium, branded app experience</strong>.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-up delay-300">
+                    <a href="#custom-app" class="px-8 py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition flex items-center justify-center">
+                        See Your Custom App
+                        <i data-lucide="arrow-down" class="ml-2 w-4 h-4"></i>
+                    </a>
+                    <a href="https://wa.me/919264248108" class="px-8 py-4 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-white hover:border-blue-500 transition flex items-center justify-center shadow-sm">
+                        <i data-lucide="play-circle" class="mr-2 w-5 h-5 text-blue-600"></i>
+                        Watch Video
+                    </a>
+                </div>
+            </div>
+
+            <div class="flex-1 w-full relative fade-up delay-200">
+                <div class="absolute -top-10 -right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+                <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+                
+                <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 relative z-20">
+                    <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
+                                <i data-lucide="layout-dashboard" class="text-slate-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800">Clinic Dashboard</h3>
+                                <p class="text-xs text-slate-500">Welcome Savita Oral Care</p>
+                            </div>
+                        </div>
+                        <div class="bg-green-50 text-green-700 px-3 py-1 rounded-md text-sm font-medium">
+                            Online
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 rounded-xl border-l-4 border-blue-500 bg-slate-50">
+                            <p class="text-xs text-slate-500 mb-1">New Patients</p>
+                            <p class="text-2xl font-bold text-slate-800">7</p>
+                        </div>
+                         <div class="p-4 rounded-xl border-l-4 border-green-500 bg-slate-50">
+                            <p class="text-xs text-slate-500 mb-1">Revenue</p>
+                            <p class="text-2xl font-bold text-slate-800">₹5,000</p>
+                        </div>
+                         <div class="p-4 rounded-xl border-l-4 border-purple-500 bg-slate-50">
+                            <p class="text-xs text-slate-500 mb-1">Appointments</p>
+                            <p class="text-2xl font-bold text-slate-800">4</p>
+                        </div>
+                         <div class="p-4 rounded-xl border-l-4 border-red-500 bg-slate-50">
+                            <p class="text-xs text-slate-500 mb-1">Pending Bill</p>
+                            <p class="text-2xl font-bold text-slate-800">₹1,500</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                      </section>
+                    <section id="about" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6">Designed for Growth, Built for Control.</h2>
+            <p class="text-lg text-slate-600 leading-relaxed mb-8">
+                NeuraWorks (NW's) is a specialized SaaS platform designed to eliminate the administrative chaos in dental clinics. We don't just store data; we activate it. From automated WhatsApp recalls to one-click invoicing, we turn manual tasks into growth engines.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-12">
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="trending-up" class="text-blue-600"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 mb-2">Increase Revenue</h4>
+                    <p class="text-sm text-slate-500">Recover lost revenue with automated billing reminders and "Pending Payment" alerts.</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="message-circle" class="text-green-600"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 mb-2">Reduce No-Shows</h4>
+                    <p class="text-sm text-slate-500">Automated WhatsApp confirmations ensure patients remember their appointments.</p>
+                </div>
+                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="smartphone" class="text-purple-600"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-800 mb-2">Brand Authority</h4>
+                    <p class="text-sm text-slate-500">Give patients an app that looks like it cost you millions to build.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="custom-app" class="py-24 bg-slate-900 text-white overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                
+                <div>
+                    <h2 class="text-3xl lg:text-4xl font-extrabold mb-6">
+                        One Platform.<br>
+                        <span class="text-blue-400">Infinite Identities.</span>
+                    </h2>
+                    <p class="text-slate-400 text-lg mb-8">
+                        We provide the technology, but the patients see <strong>YOU</strong>. Click the buttons below to see how the patient app transforms to match different clinics.
+                    </p>
+
+                    <div class="space-y-4">
+                        <button onclick="setTheme('blue', 'Neura Dental', 'Dr. Sharma')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
+                            <div class="w-10 h-10 rounded-full bg-blue-600 mr-4 border-2 border-white"></div>
+                            <div>
+                                <h4 class="font-bold text-white group-hover:text-blue-300">Neura Dental (Default)</h4>
+                                <p class="text-xs text-slate-400">Theme: Professional Blue</p>
+                            </div>
+                        </button>
+
+                        <button onclick="setTheme('green', 'Smile Care Center', 'Dr. Verma')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
+                            <div class="w-10 h-10 rounded-full bg-emerald-600 mr-4 border-2 border-white"></div>
+                            <div>
+                                <h4 class="font-bold text-white group-hover:text-emerald-300">Smile Care Center</h4>
+                                <p class="text-xs text-slate-400">Theme: Fresh Green</p>
+                            </div>
+                        </button>
+
+                        <button onclick="setTheme('purple', 'City Orthodontics', 'Dr. Priya')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
+                            <div class="w-10 h-10 rounded-full bg-purple-600 mr-4 border-2 border-white"></div>
+                            <div>
+                                <h4 class="font-bold text-white group-hover:text-purple-300">City Orthodontics</h4>
+                                <p class="text-xs text-slate-400">Theme: Premium Purple</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <div id="phoneMockup" class="phone-frame theme-blue w-[320px] h-[640px] bg-slate-50 relative shadow-2xl">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-xl z-20"></div>
+                        
+                        <div class="app-header h-32 p-6 pt-12 text-white transition-colors duration-500 rounded-b-3xl shadow-lg relative z-10">
+                            <div class="flex justify-between items-center mb-4">
+                                <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center">
+                                    <i data-lucide="menu" class="w-5 h-5 text-white"></i>
+                                </div>
+                                <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center">
+                                    <i data-lucide="bell" class="w-5 h-5 text-white"></i>
+                                </div>
+                            </div>
+                            <h3 id="clinicName" class="font-bold text-lg">Neura Dental</h3>
+                            <p class="text-xs opacity-80">Welcome, Patient</p>
+                        </div>
+
+                        <div class="p-5 space-y-4 overflow-y-auto h-[calc(100%-128px)]">
+                            
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
+                                    <i data-lucide="user" class="text-slate-400"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-800">Dharmajith Kumar</h4>
+                                    <p class="text-xs text-slate-500">ID: SOC-181125</p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3">
+                                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 text-center py-6">
+                                    <i data-lucide="calendar" class="app-accent mx-auto mb-2 w-6 h-6 transition-colors duration-500"></i>
+                                    <span class="text-xs font-bold text-slate-700">Appointments</span>
+                                </div>
+                                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 text-center py-6">
+                                    <i data-lucide="file-text" class="app-accent mx-auto mb-2 w-6 h-6 transition-colors duration-500"></i>
+                                    <span class="text-xs font-bold text-slate-700">History</span>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                                <h4 class="font-bold text-slate-800 mb-3 text-sm">Payment Summary</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between p-2 bg-red-50 rounded-lg border border-red-100">
+                                        <span class="text-xs text-red-600 font-medium">Pending</span>
+                                        <span class="text-sm font-bold text-red-700">₹0</span>
+                                    </div>
+                                    <div class="flex justify-between p-2 bg-green-50 rounded-lg border border-green-100">
+                                        <span class="text-xs text-green-600 font-medium">Paid</span>
+                                        <span class="text-sm font-bold text-green-700">₹0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="app-btn w-full py-3 rounded-xl text-white font-bold text-sm shadow-md transition-colors duration-500 flex items-center justify-center gap-2">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i> Book Appointment
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  <section id="features" class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-900">Everything Your Clinic Needs</h2>
+                <p class="text-slate-500 mt-2">Switch tabs to explore the ecosystem.</p>
+            </div>
+
+            <div class="flex justify-center mb-10 overflow-x-auto">
+                <div class="bg-white p-1 rounded-xl shadow-sm border border-slate-200 inline-flex">
+                    <button onclick="switchTab('billing')" class="tab-btn active px-6 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-600 transition border border-transparent">
+                        Billing & Finance
+                    </button>
+                    <button onclick="switchTab('comms')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-600 transition border border-transparent">
+                        Communication
+                    </button>
+                    <button onclick="switchTab('clinical')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-600 transition border border-transparent">
+                        Clinical & History
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden min-h-[400px]">
+                
+                <div id="billing" class="tab-content active p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row gap-12 items-center">
+                        <div class="flex-1">
+                            <div class="inline-block p-3 bg-red-100 rounded-lg text-red-600 mb-6">
+                                <i data-lucide="indian-rupee" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-4">Smart Invoicing & Revenue Tracking</h3>
+                            <ul class="space-y-4 text-slate-600">
+                                <li class="flex items-start">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-0.5"></i>
+                                    <span><strong>Pending Balance Alerts:</strong> Instantly see who owes money (e.g., ₹1,500 Pending) right on the dashboard.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-0.5"></i>
+                                    <span><strong>Digital Invoices:</strong> Generate professional bills (INV-176...) that can be shared via WhatsApp.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-0.5"></i>
+                                    <span><strong>Daily Totals:</strong> Auto-calculated revenue summaries (Total Paid vs Pending).</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="flex-1 bg-slate-50 p-6 rounded-2xl border border-slate-100 w-full">
+                            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                                <div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex justify-between font-bold text-xs text-slate-500 uppercase">
+                                    <span>Patient</span>
+                                    <span>Status</span>
+                                </div>
+                                <div class="divide-y divide-slate-100">
+                                    <div class="px-4 py-3 flex justify-between items-center">
+                                        <div><p class="font-bold text-sm text-slate-800">Priyanshu</p><p class="text-xs text-slate-400">INV-1768...</p></div>
+                                        <span class="px-2 py-1 bg-red-50 text-red-600 rounded text-xs font-bold">₹1,500 Pending</span>
+                                    </div>
+                                    <div class="px-4 py-3 flex justify-between items-center">
+                                        <div><p class="font-bold text-sm text-slate-800">Abhishek Kr</p><p class="text-xs text-slate-400">INV-1767...</p></div>
+                                        <span class="px-2 py-1 bg-green-50 text-green-600 rounded text-xs font-bold">Paid</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="comms" class="tab-content p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row gap-12 items-center">
+                        <div class="flex-1 order-2 md:order-1">
+                             <div class="bg-white rounded-xl shadow-lg border border-slate-100 p-6 w-full max-w-sm mx-auto">
+                                <div class="flex items-center gap-3 mb-4 border-b border-slate-50 pb-3">
+                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="message-circle" class="w-4 h-4"></i></div>
+                                    <span class="font-bold text-sm">WhatsApp Broadcast</span>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                                        <p class="text-xs font-bold text-slate-500 mb-1">Subject</p>
+                                        <p class="text-sm text-slate-800">Special Dental Checkup Offer 🦷</p>
+                                    </div>
+                                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                                        <p class="text-xs text-blue-800">Recipients: 11 Active Patients</p>
+                                    </div>
+                                    <button class="w-full bg-slate-900 text-white py-2 rounded-lg text-sm font-bold">Send Broadcast</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 order-1 md:order-2">
+                             <div class="inline-block p-3 bg-green-100 rounded-lg text-green-600 mb-6">
+                                <i data-lucide="send" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-4">Automated Communication</h3>
+                            <p class="text-slate-600 mb-6">
+                                Stop calling patients manually. Our system integrates directly with WhatsApp to handle communication at scale.
+                            </p>
+                            <ul class="space-y-3 text-slate-600">
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> <strong>Appointment Reminders:</strong> Reduce no-shows automatically.</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> <strong>Promotional Offers:</strong> Send bulk offers to your database.</li>
+                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> <strong>Follow-ups:</strong> Auto-check on patients post-treatment.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="clinical" class="tab-content p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row gap-12 items-center">
+                        <div class="flex-1">
+                             <div class="inline-block p-3 bg-purple-100 rounded-lg text-purple-600 mb-6">
+                                <i data-lucide="activity" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-900 mb-4">Digital Treatment History</h3>
+                            <p class="text-slate-600 mb-6">
+                                Keep a pristine record of every procedure. Accessible to you for reference, and accessible to the patient via their app (if you choose).
+                            </p>
+                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-100 text-sm text-yellow-800">
+                                <strong>Example:</strong> Tooth 20 - Scaling. Diagnosis: Generalized mild gingivitis.
+                            </div>
+                        </div>
+                         <div class="flex-1">
+                            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
+                                <h4 class="font-bold text-purple-700 mb-2">Treatment History (1)</h4>
+                                <div class="border-l-2 border-purple-500 pl-4 py-2">
+                                    <div class="flex justify-between mb-1">
+                                        <span class="font-bold text-slate-800">Scaling</span>
+                                        <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600">₹500</span>
+                                    </div>
+                                    <p class="text-xs text-slate-500 mb-2">Jan 24, 2026</p>
+                                    <div class="bg-green-50 p-2 rounded border border-green-100">
+                                        <p class="text-xs text-green-700"><strong>Prescription:</strong> No systemic medication.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <svg class="w-8 h-8" viewBox="0 0 100 100" fill="none">
+                         <path d="M20 30 C20 10, 40 10, 50 25 C60 10, 80 10, 80 30 C80 60, 65 80, 50 90 C35 80, 20 60, 20 30 Z" stroke="white" stroke-width="6"/>
+                    </svg>
+                    <span class="text-xl font-bold text-white">NW's</span>
+                </div>
+                <div class="text-sm">
+                    &copy; 2026 NeuraWorks. All rights reserved.
+                </div>
+                <div class="flex gap-4">
+                    <a href="mailto:neuraworks11@gmail.com" class="hover:text-white transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
+                    <a href="https://wa.me/919264248108" class="hover:text-white transition"><i data-lucide="phone" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-xs text-slate-600">
+                SaaS for Dental Professionals. Streamlining appointments, billing, and patient engagement.
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/919264248108" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition z-50 hover:scale-110 transform duration-200">
+        <i data-lucide="message-circle" class="w-6 h-6"></i>
     </a>
 
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <div class="text-2xl font-extrabold flex items-center">
-                <span class="text-primary-navy">Neura</span><span class="text-accent">Works</span>
-            </div>
-            <nav class="hidden md:flex space-x-8 text-sm font-semibold text-gray-600">
-                <a href="#hero" class="hover:text-accent transition">Your App</a>
-                <a href="#video-demo" class="hover:text-accent transition">Demo</a>
-                <a href="#features" class="hover:text-accent transition">Features</a>
-                <a href="#crm-dashboard" class="hover:text-accent transition">Dashboard</a>
-            </nav>
-            <div class="hidden md:block">
-                 <a href="https://wa.me/919264248108" target="_blank" class="px-5 py-2.5 bg-accent text-white text-sm font-bold rounded-lg hover:bg-blue-700 transition shadow-md flex items-center">
-                    <i data-lucide="phone-call" class="w-4 h-4 mr-2"></i>
-                    Book Consultation
-                </a>
-            </div>
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-600 p-2">
-                    <i data-lucide="menu" class="w-6 h-6"></i>
-                </button>
-            </div>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100 px-4 py-4 space-y-3">
-            <a href="#hero" class="block text-gray-600 font-medium">Your App</a>
-            <a href="#video-demo" class="block text-gray-600 font-medium">Demo</a>
-            <a href="#features" class="block text-gray-600 font-medium">Features</a>
-             <a href="https://wa.me/919264248108" target="_blank" class="block w-full text-center px-5 py-2.5 bg-accent text-white font-bold rounded-lg">
-                Book Consultation
-            </a>
-        </div>
-    </header>
-
-    <main>
-        <section id="hero" class="pt-20 pb-24 overflow-hidden bg-bg-light-section">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col-reverse md:flex-row items-center gap-12">
-                
-                <div class="flex-1 text-center md:text-left z-10 animate-on-scroll">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-tight text-primary-navy mb-6">
-                        Give Your Patients <br>
-                        <span class="text-accent underline decoration-4 decoration-blue-200">Their Own App.</span><br>
-                        Powered by Our AI.
-                    </h1>
-                    <p class="text-lg text-text-gray mb-8 max-w-xl mx-auto md:mx-0 leading-relaxed">
-                        Stop sending generic links. NeuraWorks provides a fully <strong>white-labeled mobile app</strong> for your clinic. Your logo, your colors, directly on your patients' phones for booking, history, and communication.
-                    </p>
-                    <div class="flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="https://wa.me/919264248108?text=I'm%20interested%20in%20a%20custom%20app%20for%20my%20clinic" target="_blank" class="px-8 py-3.5 bg-accent text-white text-lg font-bold rounded-lg hover:bg-blue-700 transition shadow-lg flex items-center justify-center">
-                            <i data-lucide="smartphone" class="w-5 h-5 mr-2"></i>
-                            Get My Clinic's App
-                        </a>
-                        <a href="#video-demo" class="px-8 py-3.5 bg-white text-primary-navy border-2 border-gray-200 text-lg font-bold rounded-lg hover:border-accent transition flex items-center justify-center">
-                            Watch Demo
-                        </a>
-                    </div>
-                    <p class="mt-6 text-sm text-gray-500 flex items-center justify-center md:justify-start">
-                        <i data-lucide="check-circle-2" class="w-4 h-4 text-green-500 mr-2"></i>
-                        No coding required. We handle everything.
-                    </p>
-                </div>
-
-                <div class="flex-1 relative w-full flex justify-center md:justify-end animate-on-scroll delay-200">
-                    <div class="absolute top-1/4 right-0 w-64 h-64 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-                    <div class="absolute bottom-1/4 right-1/3 w-64 h-64 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-                    
-                    <div class="phone-mockup z-20 transform rotate-[-2deg] hover:rotate-0 transition-all duration-500">
-                        <div class="phone-screen">
-                            <div class="app-header-bar shadow-md">
-                                <div class="clinic-logo-placeholder">
-                                    <i data-lucide="tooth" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <span class="clinic-name-text"></span>
-                                <div class="ml-auto">
-                                    <i data-lucide="menu" class="w-6 h-6"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="app-content-mockup overflow-hidden">
-                                <div class="mb-6">
-                                    <h3 class="text-lg font-bold text-gray-800">Hello, Birij Kumar 👋</h3>
-                                    <p class="text-sm text-gray-500">Here's your summary.</p>
-                                </div>
-
-                                <div class="grid grid-cols-2 gap-4 mb-6">
-                                    <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-blue-500">
-                                        <i data-lucide="calendar" class="w-6 h-6 text-blue-500 mb-2"></i>
-                                        <p class="text-2xl font-bold">1</p>
-                                        <p class="text-xs text-gray-500">Appointment Today</p>
-                                    </div>
-                                    <div class="bg-white p-4 rounded-xl shadow-sm border-l-4 border-red-400">
-                                        <i data-lucide="indian-rupee" class="w-6 h-6 text-red-400 mb-2"></i>
-                                        <p class="text-xl font-bold">₹1,500</p>
-                                        <p class="text-xs text-gray-500">Pending Bills</p>
-                                    </div>
-                                </div>
-
-                                <div class="bg-accent text-white p-4 rounded-xl shadow-md flex items-center justify-between mb-6">
-                                    <span class="font-semibold">Book New Appointment</span>
-                                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                                </div>
-
-                                <h4 class="font-bold text-gray-800 mb-3">Upcoming</h4>
-                                <div class="mockup-card border border-gray-100 flex items-center">
-                                     <div class="bg-blue-100 p-3 rounded-lg mr-4">
-                                         <i data-lucide="calendar-clock" class="w-6 h-6 text-blue-600"></i>
-                                     </div>
-                                     <div>
-                                         <div class="mockup-line w-32"></div>
-                                         <div class="mockup-line short w-20"></div>
-                                     </div>
-                                </div>
-
-                            </div>
-                            <div class="absolute bottom-0 w-full bg-white border-t border-gray-100 p-4 flex justify-around text-gray-400">
-                                <i data-lucide="home" class="w-6 h-6 text-accent"></i>
-                                <i data-lucide="calendar-days" class="w-6 h-6"></i>
-                                <i data-lucide="user" class="w-6 h-6"></i>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-            </div>
-        </section>
-
-        <section id="video-demo" class="py-20 bg-white">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-on-scroll">
-                <span class="text-accent font-semibold uppercase tracking-wider text-sm mb-2 block">See It In Action</span>
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-primary-navy mb-8">
-                    The Patient Experience, Perfected.
-                </h2>
-                
-                <div class="relative w-full pt-[56.25%] rounded-2xl overflow-hidden shadow-xl border-2 border-gray-100 bg-gray-900">
-                    <iframe 
-                        class="absolute top-0 left-0 w-full h-full"
-                        src="https://www.youtube.com/embed/3XHwmeJ-Ws8" 
-                        title="Neura Work Dental AI Automation Demo" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        referrerpolicy="strict-origin-when-cross-origin" 
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <p class="text-text-gray mt-6 max-w-2xl mx-auto">
-                    A 60-second overview of how the platform manages appointments, reduces no-shows automatically, and provides a seamless experience for your staff and patients.
-                </p>
-            </div>
-        </section>
-
-        <section id="features" class="py-24 bg-bg-light-section">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 animate-on-scroll">
-                    <h2 class="text-3xl sm:text-4xl font-extrabold text-primary-navy mb-4">What's Inside Your Custom App?</h2>
-                    <p class="text-lg text-text-gray max-w-3xl mx-auto">
-                        Your patients get a professional, branded portal to manage their dental health, while you get automated administrative relief.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    
-                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition animate-on-scroll">
-                        <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
-                            <i data-lucide="user-circle-2" class="w-8 h-8 text-primary-blue"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-primary-navy mb-3">Complete Patient Profiles</h3>
-                        <p class="text-text-gray">
-                            Patients can view their personal details, medical history highlights, and past visit summaries in one secure location.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition animate-on-scroll delay-100">
-                        <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
-                            <i data-lucide="clipboard-list" class="w-8 h-8 text-purple-600"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-primary-navy mb-3">Treatment & Prescription History</h3>
-                        <p class="text-text-gray">
-                            Transparent access to past procedures (e.g., Scaling, Root Canal), diagnosis notes, and digital prescriptions.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition animate-on-scroll delay-200">
-                        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6">
-                            <i data-lucide="calendar-check-2" class="w-8 h-8 text-green-600"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-primary-navy mb-3">Instant Booking & Billing</h3>
-                        <p class="text-text-gray">
-                            Patients can book appointments instantly and view real-time billing summaries, including pending and paid invoices.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="crm-dashboard" class="py-24 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                    
-                    <div class="animate-on-scroll">
-                        <h2 class="text-3xl sm:text-4xl font-extrabold text-primary-navy mb-6">
-                            Your Command Center. <br>Clean, Clear, & Powerful.
-                        </h2>
-                        <p class="text-lg text-text-gray mb-8">
-                            Manage your entire practice from a App designed for clarity. Track revenue, monitor daily appointments, and see the immediate impact of automated recalls—all in real-time.
-                        </p>
-                        
-                        <ul class="space-y-4 mb-8">
-                            <li class="flex items-center text-primary-navy font-medium">
-                                <i data-lucide="check-circle" class="w-5 h-5 text-accent mr-3"></i>
-                                Real-time Revenue Tracking (₹)
-                            </li>
-                            <li class="flex items-center text-primary-navy font-medium">
-                                <i data-lucide="check-circle" class="w-5 h-5 text-accent mr-3"></i>
-                                Automated Recall Success Metrics
-                            </li>
-                            <li class="flex items-center text-primary-navy font-medium">
-                                <i data-lucide="check-circle" class="w-5 h-5 text-accent mr-3"></i>
-                                Pending vs. Paid Invoice Status
-                            </li>
-                        </ul>
-
-                        <a href="https://wa.me/919264248108" class="inline-flex items-center text-accent font-bold hover:underline">
-                            Schedule a Full Dashboard Tour <i data-lucide="arrow-right" class="w-5 h-5 ml-2"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="relative animate-on-scroll delay-200">
-                        <div class="absolute -top-10 -right-10 w-72 h-72 bg-blue-50 rounded-full filter blur-3xl opacity-50"></div>
-
-                        <div class="relative bg-bg-light-section p-6 rounded-3xl shadow-xl border border-gray-100">
-                            <div class="flex justify-between items-center mb-6">
-                                <div>
-                                    <h3 class="text-xl font-bold text-primary-navy">Dashboard</h3>
-                                    <p class="text-sm text-text-gray">Welcome Savita Oral & Dental Care</p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm font-semibold text-primary-navy">Today</p>
-                                    <p class="text-xs text-text-gray">January 24, 2026</p>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-4 mb-6">
-                                <div class="bg-white p-5 rounded-2xl shadow-sm border-l-[6px] border-green-500 flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm text-text-gray mb-1">Today's Appointments</p>
-                                        <p class="text-3xl font-extrabold text-primary-navy">8</p>
-                                    </div>
-                                    <div class="bg-green-100 p-3 rounded-xl">
-                                        <i data-lucide="calendar-check" class="w-6 h-6 text-green-600"></i>
-                                    </div>
-                                </div>
-                                <div class="bg-white p-5 rounded-2xl shadow-sm border-l-[6px] border-accent flex justify-between items-center">
-                                    <div>
-                                        <p class="text-sm text-text-gray mb-1">Revenue This Month</p>
-                                        <p class="text-3xl font-extrabold text-primary-navy">₹45k</p>
-                                    </div>
-                                    <div class="bg-blue-100 p-3 rounded-xl">
-                                        <i data-lucide="indian-rupee" class="w-6 h-6 text-accent"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="bg-white p-5 rounded-2xl shadow-sm">
-                                <div class="flex justify-between items-center mb-4">
-                                    <h4 class="font-bold text-primary-navy flex items-center">
-                                        <i data-lucide="trending-up" class="w-5 h-5 mr-2 text-accent"></i> Revenue Trend
-                                    </h4>
-                                    <div class="flex space-x-2">
-                                        <span class="px-3 py-1 bg-gray-100 text-xs rounded-md text-gray-500">Week</span>
-                                        <span class="px-3 py-1 bg-primary-navy text-xs rounded-md text-white">Month</span>
-                                    </div>
-                                </div>
-                                <div class="h-48 flex items-end justify-between space-x-2 pl-4 border-l border-b border-gray-100 pb-2">
-                                    <div class="w-full bg-blue-100 rounded-t-md relative group" style="height: 40%;">
-                                        <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary-navy text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">₹12k</div>
-                                    </div>
-                                    <div class="w-full bg-blue-200 rounded-t-md relative group" style="height: 65%;"></div>
-                                    <div class="w-full bg-accent rounded-t-md relative group" style="height: 85%;">
-                                         <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-primary-navy text-white text-xs px-2 py-1 rounded">₹24k</div>
-                                    </div>
-                                    <div class="w-full bg-blue-200 rounded-t-md" style="height: 55%;"></div>
-                                    <div class="w-full bg-blue-100 rounded-t-md" style="height: 30%;"></div>
-                                </div>
-                                <div class="flex justify-between text-xs text-gray-400 mt-2 px-2">
-                                    <span>Week 1</span><span>Week 2</span><span>Week 3</span><span>Week 4</span>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    </div>
-            </div>
-        </section>
-      <section class="py-20 bg-primary-navy">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-on-scroll">
-                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-6">
-                    Ready to modernize your practice?
-                </h2>
-                <p class="text-xl text-blue-200 mb-10">
-                    Get your custom-branded app and elevate your patient experience today.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                     <a href="https://wa.me/919264248108" target="_blank" class="px-8 py-4 bg-accent text-white text-lg font-bold rounded-lg hover:bg-blue-700 transition shadow-lg flex items-center justify-center">
-                        <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i>
-                        Chat on WhatsApp
-                    </a>
-                    <a href="mailto:neuraworks11@gmail.com" class="px-8 py-4 bg-transparent border-2 border-white text-white text-lg font-bold rounded-lg hover:bg-white/10 transition flex items-center justify-center">
-                        <i data-lucide="mail" class="w-5 h-5 mr-2"></i>
-                        Email Us
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <footer class="bg-slate-900 pt-16 pb-8 border-t border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-white">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-                    <div>
-                        <div class="text-2xl font-extrabold mb-4">
-                            <span class="text-white">Neura</span><span class="text-accent">Works</span>
-                        </div>
-                        <p class="text-gray-400 text-sm max-w-xs leading-relaxed">
-                            Specializing in white-label apps and AI automation for modern dental clinics.
-                        </p>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold mb-4 text-white">Contact</h4>
-                        <ul class="space-y-3 text-gray-400 text-sm">
-                            <li class="flex items-center"><i data-lucide="mail" class="w-4 h-4 mr-2 text-accent"></i> neuraworks11@gmail.com</li>
-                            <li class="flex items-center"><i data-lucide="phone" class="w-4 h-4 mr-2 text-accent"></i> +91 92642 48108</li>
-                             <li class="flex items-center"><i data-lucide="map-pin" class="w-4 h-4 mr-2 text-accent"></i> India</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-lg font-bold mb-4 text-white">Links</h4>
-                         <ul class="space-y-2 text-gray-400 text-sm">
-                            <li><a href="#hero" class="hover:text-accent transition">Custom App</a></li>
-                            <li><a href="#features" class="hover:text-accent transition">Features</a></li>
-                             <li><a href="https://wa.me/919264248108" class="hover:text-accent transition">Support</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="text-center text-gray-500 text-sm border-t border-slate-800 pt-8">
-                    &copy; <span id="current-year"></span> Neura Works. All rights reserved.
-                </div>
-            </div>
-        </footer>
-
-    </main>
-
     <script>
-        // 1. Initialize Lucide Icons
+        // Init Icons
         lucide.createIcons();
 
-        // 2. Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        // Theme Switcher Logic
+        function setTheme(themeName, clinicNameText, docName) {
+            const mockup = document.getElementById('phoneMockup');
+            const nameLabel = document.getElementById('clinicName');
+            
+            // Remove old classes
+            mockup.classList.remove('theme-blue', 'theme-green', 'theme-purple');
+            // Add new class
+            mockup.classList.add(`theme-${themeName}`);
+            
+            // Change Text
+            nameLabel.innerText = clinicNameText;
+            nameLabel.classList.add('animate-pulse');
+            setTimeout(() => nameLabel.classList.remove('animate-pulse'), 500);
+        }
 
-        // 3. Set Current Year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // 4. Scroll Animation Observer
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.15 // Trigger when 15% of element is visible
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    observer.unobserve(entry.target); // Only animate once
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.animate-on-scroll').forEach(el => {
-            observer.observe(el);
-        });
+        // Tab Switcher Logic
+        function switchTab(tabId) {
+            // Buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Content
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
     </script>
-
 </body>
-</html>
- 
+  </html>
