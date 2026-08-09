@@ -1,510 +1,808 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CrownOs | The Operating System software for  Clinics</title>
-  <meta name="description" content="Complete Dental SaaS. Billing, Invoicing, WhatsApp Automation, and your own Custom Branded Patient App.">
- <!-- FAVICON (VERY IMPORTANT) -->
-  <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="apple-touch-icon" href="/favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CrownOs | The Operating System for Dental Clinics</title>
+<meta name="description" content="CrownOs runs the back office of a dental clinic: billing, WhatsApp automation, treatment-plan follow-through, patient reactivation, and a branded patient app.">
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Organization","name":"CrownOs","url":"https://yourdomain.com","logo":"https://yourdomain.com/favicon.png","sameAs":["https://www.instagram.com/crownos.in"]}
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- GOOGLE SITE LOGO (SEARCH RESULTS) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "CrownOs",
-    "url": "https://yourdomain.com",
-    "logo": "https://yourdomain.com/favicon.png"
-  }
-  </script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <style>
-    :root {
-        /* Palette extracted from your screenshots */
-        --brand-navy: #0F172A;
-        --brand-blue: #2563EB;   /* Action Blue */
-        --brand-green: #10B981;  /* WhatsApp/Success */
-        --brand-red: #F43F5E;    /* Pending/Alerts */
-        --bg-light: #F8FAFC;
-    }
+<style>
+:root{
+  --paper:#F6F4EE;
+  --paper-2:#EFEDE4;
+  --ink:#10151C;
+  --ink-soft:#4A5162;
+  --teal:#0C8599;
+  --teal-deep:#075E6B;
+  --coral:#E8546A;
+  --mint:#1B9E76;
+  --amber:#C97A1A;
+  --line:#DEDACC;
+}
+*{box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:var(--paper);}
+.font-display{font-family:'Fraunces',serif; font-optical-sizing:auto;}
+.font-mono{font-family:'IBM Plex Mono',monospace;}
+.hairline{border-color:var(--line);}
 
-    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--brand-navy); background: #ffffff; }
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+}
 
-    /* --- ANIMATIONS --- */
-    .fade-up { animation: fadeUp 0.6s ease-out forwards; opacity: 0; transform: translateY(20px); }
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    
-    .delay-100 { animation-delay: 0.1s; }
-    .delay-200 { animation-delay: 0.2s; }
-    .delay-300 { animation-delay: 0.3s; }
+.fade-up{animation:fadeUp .7s cubic-bezier(.2,.7,.2,1) forwards; opacity:0; transform:translateY(16px);}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+.delay-100{animation-delay:.1s}.delay-200{animation-delay:.2s}.delay-300{animation-delay:.3s}
 
-    /* --- INTERACTIVE PHONE MOCKUP --- */
-    .phone-frame {
-        border: 8px solid #1E293B; border-radius: 40px; overflow: hidden;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        transition: all 0.4s ease; background: #fff;
-    }
-    
-    /* Dynamic Branding Classes */
-    .theme-blue .app-header { background: #2563EB; }
-    .theme-blue .app-accent { color: #2563EB; }
-    .theme-blue .app-btn { background: #2563EB; }
-    
-    .theme-green .app-header { background: #059669; }
-    .theme-green .app-accent { color: #059669; }
-    .theme-green .app-btn { background: #059669; }
-    
-    .theme-purple .app-header { background: #7C3AED; }
-    .theme-purple .app-accent { color: #7C3AED; }
-    .theme-purple .app-btn { background: #7C3AED; }
+a:focus-visible, button:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
 
-    /* --- TAB SYSTEM --- */
-    .tab-btn.active {
-        background-color: #EFF6FF; color: #2563EB; border-color: #2563EB;
-    }
-    .tab-content { display: none; animation: fadeIn 0.4s ease; }
-    .tab-content.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* ---- Live ledger panel (signature element) ---- */
+.ledger{
+  background:#0F1720;
+  border-radius:20px;
+  box-shadow: 0 30px 60px -20px rgba(15,23,32,.45);
+  overflow:hidden;
+}
+.ledger-row{
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding:.55rem .9rem; border-bottom:1px solid rgba(255,255,255,.06);
+  opacity:0; animation: rowIn .5s ease forwards;
+}
+@keyframes rowIn{ from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+.ledger-tag{font-size:.62rem; letter-spacing:.05em; padding:.12rem .45rem; border-radius:999px;}
+.tag-book{background:rgba(12,133,153,.18); color:#5FD3E6;}
+.tag-pay{background:rgba(27,158,118,.18); color:#7CE0B8;}
+.tag-msg{background:rgba(232,84,106,.16); color:#F19BA9;}
+.tag-plan{background:rgba(201,122,26,.18); color:#F0B96A;}
 
-  </style>
+.pulse-dot{width:7px;height:7px;border-radius:999px;background:var(--mint); position:relative;}
+.pulse-dot::after{content:'';position:absolute;inset:-4px;border-radius:999px;background:var(--mint);opacity:.4;animation:pulse 2s infinite;}
+@keyframes pulse{0%{transform:scale(.6);opacity:.6}70%{transform:scale(2.1);opacity:0}100%{opacity:0}}
+
+/* ---- Phone mockup theming ---- */
+.phone-frame{border:8px solid #10151C;border-radius:40px;overflow:hidden;box-shadow:0 25px 50px -12px rgba(16,21,28,.35);background:#fff;}
+.theme-blue .app-header{background:var(--teal);} .theme-blue .app-accent{color:var(--teal);} .theme-blue .app-btn{background:var(--teal);}
+.theme-green .app-header{background:var(--mint);} .theme-green .app-accent{color:var(--mint);} .theme-green .app-btn{background:var(--mint);}
+.theme-amber .app-header{background:var(--amber);} .theme-amber .app-accent{color:var(--amber);} .theme-amber .app-btn{background:var(--amber);}
+
+.tab-btn.active{background:var(--paper); color:var(--teal-deep); border-color:var(--teal);}
+.tab-content{display:none; animation:fadeIn .35s ease;}
+.tab-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+.ig-gradient{background:radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);}
+.social-float{transition:transform .2s ease;}
+.social-float:hover{transform:scale(1.08) translateY(-2px);}
+
+.tick{font-variant-numeric:tabular-nums;}
+</style>
 </head>
 <body class="antialiased">
 
-    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-20">
-            <div class="flex items-center gap-3">
-                <div class="w-12 h-12">
-                    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M50 95C30 85 15 65 15 35C15 15 35 10 50 25C65 10 85 15 85 35C85 65 70 85 50 95Z" fill="#2563EB" />
-                        <path d="M35 30H45M30 40H45M35 50H45M55 30H65M55 40H70M55 50H65" stroke="white" stroke-width="3" stroke-linecap="round"/>
-                        <path d="M50 25V90" stroke="white" stroke-opacity="0.2" stroke-width="1"/>
-                        <circle cx="30" cy="40" r="1.5" fill="white"/>
-                        <circle cx="72" cy="40" r="1.5" fill="white"/>
-                    </svg>
-                </div>
-                <span class="text-2xl font-bold tracking-tighter text-slate-900">Crown<span class="text-blue-600">Os</span></span>
-            </div>
+<nav class="fixed w-full z-50 bg-[var(--paper)]/95 backdrop-blur-sm border-b hairline">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex items-center gap-3">
+        <img src="data:image/png;base64,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" alt="CrownOs logo" class="w-10 h-10 rounded-xl">
+        <span class="font-display text-2xl font-semibold tracking-tight text-slate-900">Crown<span class="text-blue-600">Os</span></span>
+      </div>
+      <div class="hidden md:flex space-x-8 items-center text-sm font-semibold" style="color:var(--ink-soft)">
+        <a href="#features" class="hover:text-[var(--teal)] transition">Features</a>
+        <a href="#growth" class="hover:text-[var(--teal)] transition">Growth Engine</a>
+        <a href="#custom-app" class="hover:text-[var(--teal)] transition">Your App</a>
+        <a href="https://www.instagram.com/crownos.in?igsh=MWZIMG90Y2FIYzI4aw" target="_blank" rel="noopener" aria-label="CrownOs on Instagram" class="w-10 h-10 rounded-full ig-gradient flex items-center justify-center hover:opacity-90 transition shadow-md">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="https://wa.me/919264248108" class="px-5 py-2.5 text-white rounded-lg transition shadow-lg flex items-center gap-2" style="background:var(--ink)">
+          <svg viewBox="0 0 32 32" fill="currentColor" class="w-4 h-4"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.623.86 5.045 2.316 7.01L4.6 27.6l5.723-1.687A11.94 11.94 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm5.4 13.44c-.296-.148-1.75-.864-2.022-.963-.272-.099-.47-.148-.667.148-.198.297-.766.963-.94 1.161-.173.198-.346.223-.642.075-.297-.148-1.253-.462-2.386-1.472-.882-.787-1.478-1.76-1.651-2.057-.173-.297-.019-.457.13-.605.134-.133.297-.346.446-.52.148-.173.198-.297.297-.495.099-.198.05-.372-.025-.52-.074-.148-.667-1.607-.914-2.202-.24-.578-.485-.5-.667-.51l-.568-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.478 0 1.462 1.065 2.874 1.213 3.072.148.198 2.096 3.2 5.08 4.487.71.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.75-.716 1.998-1.408.247-.693.247-1.286.173-1.409-.074-.123-.272-.198-.568-.346z"/></svg>
+          Book Demo
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
 
-                <div class="hidden md:flex space-x-8 items-center text-sm font-semibold text-slate-600">
-                    <a href="#features" class="hover:text-blue-600 transition">Features</a>
-                    <a href="#custom-app" class="hover:text-blue-600 transition">Your App</a>
-                    <a href="#about" class="hover:text-blue-600 transition">About Us</a>
-                    <a href="https://wa.me/919264248108" class="px-5 py-2.5 bg-brand-blue text-white rounded-lg hover:bg-blue-700 transition shadow-lg shadow-blue-500/20">
-                        Book Demo
-                    </a>
-                </div>
-            </div>
+<!-- HERO -->
+<section class="pt-32 pb-20 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center">
+    <div class="fade-up">
+      <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6" style="background:var(--paper-2); color:var(--teal-deep)">
+        <span class="w-2 h-2 rounded-full mr-2" style="background:var(--teal)"></span>
+        Operating system for dental clinics
+      </div>
+      <h1 class="font-display text-5xl lg:text-6xl font-semibold leading-[1.05] mb-6">
+        Every rupee owed.<br>Every patient followed up.<br><span style="color:var(--teal)">Nothing on paper.</span>
+      </h1>
+      <p class="text-lg leading-relaxed mb-8 max-w-xl" style="color:var(--ink-soft)">
+        CrownOs replaces the register, the WhatsApp forwards, and the sticky notes with one system: billing, treatment-plan follow-through, patient reactivation, and a clinic app that carries your name — not ours.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a href="#custom-app" class="px-8 py-4 text-white font-bold rounded-xl transition flex items-center justify-center" style="background:var(--ink)">
+          See your branded app <i data-lucide="arrow-down" class="ml-2 w-4 h-4"></i>
+        </a>
+        <a href="https://youtu.be/HMqQbzVX_Z4?si=Zr_RtsegNi4TgS3R" class="px-8 py-4 bg-white border font-bold rounded-xl transition flex items-center justify-center shadow-sm hairline" style="color:var(--ink)">
+          <i data-lucide="play-circle" class="mr-2 w-5 h-5" style="color:var(--teal)"></i> Watch a real clinic run it
+        </a>
+      </div>
+    </div>
+
+    <!-- LIVE OPERATIONS LEDGER — data simulation, not a static screenshot -->
+    <div class="fade-up delay-200">
+      <div class="ledger">
+        <div class="flex items-center justify-between px-5 py-4 border-b border-white/10">
+          <div class="flex items-center gap-2">
+            <span class="pulse-dot"></span>
+            <span class="text-white/80 text-xs font-mono uppercase tracking-widest">Live clinic feed</span>
+          </div>
+          <span class="text-white/40 text-xs font-mono">Savita Oral &amp; Dental Care</span>
         </div>
-    </nav>
 
-    <section class="pt-32 pb-20 overflow-hidden bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-16">
-            
-            <div class="flex-1 text-center lg:text-left z-10">
-                <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-bold uppercase tracking-wider mb-6 fade-up">
-                    <span class="w-2 h-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
-                    SaaS for Dental Clinics
-                </div>
-                <h1 class="text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight mb-6 fade-up delay-100">
-                    Your Clinic. <br>
-                    <span class="text-blue-600">Your Own App.</span> <br>
-                    Total Control.
-                </h1>
-                <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0 fade-up delay-200">
-                    CrownOs isn't just software. We build your clinic's digital infrastructure. Automate billing, follow-ups, and reminders while giving your clinic a <strong>software that actually works for clinic </strong>.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start fade-up delay-300">
-                    <a href="#custom-app" class="px-8 py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition flex items-center justify-center">
-                        See Your Custom App
-                        <i data-lucide="arrow-down" class="ml-2 w-4 h-4"></i>
-                    </a>
-                    <a href="https://youtu.be/HMqQbzVX_Z4?si=Zr_RtsegNi4TgS3R" class="px-8 py-4 bg-white border border-slate-200 text-slate-700 font-bold rounded-xl hover:bg-white hover:border-blue-500 transition flex items-center justify-center shadow-sm">
-                        <i data-lucide="play-circle" class="mr-2 w-5 h-5 text-blue-600"></i>
-                        Watch Video
-                    </a>
-                </div>
-            </div>
-
-            <div class="flex-1 w-full relative fade-up delay-200">
-                <div class="absolute -top-10 -right-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
-                <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
-                
-                <div class="bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 relative z-20">
-                    <div class="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center">
-                                <i data-lucide="layout-dashboard" class="text-slate-600"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-slate-800">Clinic Dashboard</h3>
-                                <p class="text-xs text-slate-500">Welcome Savita Oral Care</p>
-                            </div>
-                        </div>
-                        <div class="bg-green-50 text-green-700 px-3 py-1 rounded-md text-sm font-medium">
-                            Online
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 rounded-xl border-l-4 border-blue-500 bg-slate-50">
-                            <p class="text-xs text-slate-500 mb-1">New Patients</p>
-                            <p class="text-2xl font-bold text-slate-800">7</p>
-                        </div>
-                         <div class="p-4 rounded-xl border-l-4 border-green-500 bg-slate-50">
-                            <p class="text-xs text-slate-500 mb-1">Revenue</p>
-                            <p class="text-2xl font-bold text-slate-800">₹5,000</p>
-                        </div>
-                         <div class="p-4 rounded-xl border-l-4 border-purple-500 bg-slate-50">
-                            <p class="text-xs text-slate-500 mb-1">Appointments</p>
-                            <p class="text-2xl font-bold text-slate-800">4</p>
-                        </div>
-                         <div class="p-4 rounded-xl border-l-4 border-red-500 bg-slate-50">
-                            <p class="text-xs text-slate-500 mb-1">Pending Bill</p>
-                            <p class="text-2xl font-bold text-slate-800">₹1,500</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="grid grid-cols-3 divide-x divide-white/10 border-b border-white/10">
+          <div class="px-5 py-4">
+            <p class="text-white/40 text-[11px] font-mono uppercase mb-1">Revenue today</p>
+            <p id="stat-revenue" class="font-mono tick text-2xl text-white font-semibold">₹0</p>
+          </div>
+          <div class="px-5 py-4">
+            <p class="text-white/40 text-[11px] font-mono uppercase mb-1">Appointments</p>
+            <p id="stat-appts" class="font-mono tick text-2xl text-white font-semibold">0</p>
+          </div>
+          <div class="px-5 py-4">
+            <p class="text-white/40 text-[11px] font-mono uppercase mb-1">Collection rate</p>
+            <p id="stat-collection" class="font-mono tick text-2xl text-white font-semibold">0%</p>
+          </div>
         </div>
-                      </section>
-                    <section id="about" class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold text-slate-900 mb-6">Designed for Growth, Built for Control.</h2>
-            <p class="text-lg text-slate-600 leading-relaxed mb-8">
-                CrownOs is a specialized SaaS platform designed to eliminate the administrative chaos in dental clinics. We don't just store data; we activate it. From automated WhatsApp recalls to one-click invoicing to literally every thing a clinic needs, we turn manual tasks into growth engines.
-            </p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-12">
-                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
-                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="trending-up" class="text-blue-600"></i>
-                    </div>
-                    <h4 class="font-bold text-slate-800 mb-2">Increase Revenue</h4>
-                    <p class="text-sm text-slate-500">Recover lost revenue with automated billing reminders and "Pending Payment" alerts.</p>
-                </div>
-                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
-                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="message-circle" class="text-green-600"></i>
-                    </div>
-                    <h4 class="font-bold text-slate-800 mb-2">Reduce No-Shows</h4>
-                    <p class="text-sm text-slate-500">Automated WhatsApp confirmations ensure patients remember their appointments.</p>
-                </div>
-                <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
-                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                        <i data-lucide="smartphone" class="text-purple-600"></i>
-                    </div>
-                    <h4 class="font-bold text-slate-800 mb-2">Brand Authority</h4>
-                    <p class="text-sm text-slate-500">Give patients an app that looks like it cost you millions to build.</p>
-                </div>
-            </div>
+
+        <div id="feed" class="max-h-[220px] overflow-hidden"></div>
+
+        <div class="px-5 py-3 bg-white/[0.03] text-white/35 text-[11px] font-mono">
+          Simulated activity for illustration — your dashboard runs on your clinic's real data.
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="custom-app" class="py-24 bg-slate-900 text-white overflow-hidden relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                
-                <div>
-                    <h2 class="text-3xl lg:text-4xl font-extrabold mb-6">
-                        One Platform.<br>
-                        <span class="text-blue-400">Infinite Identities.</span>
-                    </h2>
-                    <p class="text-slate-400 text-lg mb-8">
-                        We provide the technology, but the patients see <strong>YOU</strong>. Click the buttons below to see how the patient app transforms to match different clinics.
-                    </p>
+<!-- ABOUT -->
+<section id="about" class="py-20 bg-white border-t border-b hairline">
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h2 class="font-display text-3xl font-semibold mb-6">Built to close the gaps that leak revenue.</h2>
+    <p class="text-lg leading-relaxed mb-8" style="color:var(--ink-soft)">
+      Most clinic software stores data. CrownOs acts on it — flagging the crown case a patient never confirmed, the invoice sitting half-paid, the Sunday slot that's always empty — and gives you the one-tap action to fix it.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mt-12">
+      <div class="p-6 rounded-xl border hairline" style="background:var(--paper)">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4" style="background:var(--paper-2)"><i data-lucide="trending-up" style="color:var(--teal)"></i></div>
+        <h4 class="font-bold mb-2">Recover pending revenue</h4>
+        <p class="text-sm" style="color:var(--ink-soft)">Automatic pending-balance alerts and a "pay 50% upfront for lab work" policy you can enforce, not just suggest.</p>
+      </div>
+      <div class="p-6 rounded-xl border hairline" style="background:var(--paper)">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4" style="background:var(--paper-2)"><i data-lucide="message-circle" style="color:var(--mint)"></i></div>
+        <h4 class="font-bold mb-2">Cut no-shows and dormancy</h4>
+        <p class="text-sm" style="color:var(--ink-soft)">WhatsApp confirmations, follow-up nudges, and a reactivation engine that finds patients dormant 6+ months.</p>
+      </div>
+      <div class="p-6 rounded-xl border hairline" style="background:var(--paper)">
+        <div class="w-11 h-11 rounded-lg flex items-center justify-center mb-4" style="background:var(--paper-2)"><i data-lucide="smartphone" style="color:var(--amber)"></i></div>
+        <h4 class="font-bold mb-2">Own the patient relationship</h4>
+        <p class="text-sm" style="color:var(--ink-soft)">A patient app carrying your clinic's name, colors, and doctor — not a shared marketplace listing.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-                    <div class="space-y-4">
-                        <button onclick="setTheme('blue', 'Neura Dental', 'Dr. Sharma')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
-                            <div class="w-10 h-10 rounded-full bg-blue-600 mr-4 border-2 border-white"></div>
-                            <div>
-                                <h4 class="font-bold text-white group-hover:text-blue-300">Neura Dental (Default)</h4>
-                                <p class="text-xs text-slate-400">Theme: Professional Blue</p>
-                            </div>
-                        </button>
+<!-- GROWTH ENGINE — grounded in the real Clinic Growth / Reactivation / Treatment Pipeline screens -->
+<section id="growth" class="py-24" style="background:var(--paper-2)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mb-14">
+      <p class="font-mono text-xs uppercase tracking-widest mb-3" style="color:var(--teal-deep)">Clinic growth</p>
+      <h2 class="font-display text-3xl lg:text-4xl font-semibold mb-4">A standing action plan, not a report you have to read.</h2>
+      <p style="color:var(--ink-soft)">Three screens do the thinking your front desk doesn't have time for.</p>
+    </div>
 
-                        <button onclick="setTheme('green', 'Smile Care Center', 'Dr. Verma')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
-                            <div class="w-10 h-10 rounded-full bg-emerald-600 mr-4 border-2 border-white"></div>
-                            <div>
-                                <h4 class="font-bold text-white group-hover:text-emerald-300">Smile Care Center</h4>
-                                <p class="text-xs text-slate-400">Theme: Fresh Green</p>
-                            </div>
-                        </button>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl border hairline p-7 shadow-sm">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(232,84,106,.1)"><i data-lucide="zap" style="color:var(--coral)" class="w-5 h-5"></i></div>
+        <h4 class="font-bold text-lg mb-2">Growth Action Plan</h4>
+        <p class="text-sm mb-4" style="color:var(--ink-soft)">Ranked recommendations like <em>"Collection rate is below 80% target"</em> or <em>"Sunday is your slowest day"</em> — each with the exact next click.</p>
+        <span class="inline-block text-xs font-mono px-2 py-1 rounded" style="background:rgba(232,84,106,.1); color:var(--coral)">high priority flags</span>
+      </div>
+      <div class="bg-white rounded-2xl border hairline p-7 shadow-sm">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(27,158,118,.1)"><i data-lucide="user-check" style="color:var(--mint)" class="w-5 h-5"></i></div>
+        <h4 class="font-bold text-lg mb-2">Patient Reactivation Engine</h4>
+        <p class="text-sm mb-4" style="color:var(--ink-soft)">Surfaces every patient dormant 6+ months, checks who's reachable on WhatsApp, and tracks who's already been contacted.</p>
+        <span class="inline-block text-xs font-mono px-2 py-1 rounded" style="background:rgba(27,158,118,.1); color:var(--mint)">recovered revenue</span>
+      </div>
+      <div class="bg-white rounded-2xl border hairline p-7 shadow-sm">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-5" style="background:rgba(201,122,26,.1)"><i data-lucide="clipboard-list" style="color:var(--amber)" class="w-5 h-5"></i></div>
+        <h4 class="font-bold text-lg mb-2">Treatment Acceptance Pipeline</h4>
+        <p class="text-sm mb-4" style="color:var(--ink-soft)">Every recommended treatment tracked from proposed → accepted → rejected, with a live revenue-leak figure for what patients declined.</p>
+        <span class="inline-block text-xs font-mono px-2 py-1 rounded" style="background:rgba(201,122,26,.1); color:var(--amber)">acceptance rate</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-                        <button onclick="setTheme('purple', 'City Orthodontics', 'Dr. Priya')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
-                            <div class="w-10 h-10 rounded-full bg-purple-600 mr-4 border-2 border-white"></div>
-                            <div>
-                                <h4 class="font-bold text-white group-hover:text-purple-300">City Orthodontics</h4>
-                                <p class="text-xs text-slate-400">Theme: Premium Purple</p>
-                            </div>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="flex justify-center">
-                    <div id="phoneMockup" class="phone-frame theme-blue w-[320px] h-[640px] bg-slate-50 relative shadow-2xl">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-900 rounded-b-xl z-20"></div>
-                        
-                        <div class="app-header h-32 p-6 pt-12 text-white transition-colors duration-500 rounded-b-3xl shadow-lg relative z-10">
-                            <div class="flex justify-between items-center mb-4">
-                                <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center">
-                                    <i data-lucide="menu" class="w-5 h-5 text-white"></i>
-                                </div>
-                                <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center">
-                                    <i data-lucide="bell" class="w-5 h-5 text-white"></i>
-                                </div>
-                            </div>
-                            <h3 id="clinicName" class="font-bold text-lg">Neura Dental</h3>
-                            <p class="text-xs opacity-80">Welcome, Patient</p>
-                        </div>
-
-                        <div class="p-5 space-y-4 overflow-y-auto h-[calc(100%-128px)]">
-                            
-                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-                                    <i data-lucide="user" class="text-slate-400"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800">Dharmajith Kumar</h4>
-                                    <p class="text-xs text-slate-500">ID: SOC-181125</p>
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-2 gap-3">
-                                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 text-center py-6">
-                                    <i data-lucide="calendar" class="app-accent mx-auto mb-2 w-6 h-6 transition-colors duration-500"></i>
-                                    <span class="text-xs font-bold text-slate-700">Appointments</span>
-                                </div>
-                                <div class="bg-white p-3 rounded-xl shadow-sm border border-slate-100 text-center py-6">
-                                    <i data-lucide="file-text" class="app-accent mx-auto mb-2 w-6 h-6 transition-colors duration-500"></i>
-                                    <span class="text-xs font-bold text-slate-700">History</span>
-                                </div>
-                            </div>
-
-                            <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                                <h4 class="font-bold text-slate-800 mb-3 text-sm">Payment Summary</h4>
-                                <div class="space-y-2">
-                                    <div class="flex justify-between p-2 bg-red-50 rounded-lg border border-red-100">
-                                        <span class="text-xs text-red-600 font-medium">Pending</span>
-                                        <span class="text-sm font-bold text-red-700">₹0</span>
-                                    </div>
-                                    <div class="flex justify-between p-2 bg-green-50 rounded-lg border border-green-100">
-                                        <span class="text-xs text-green-600 font-medium">Paid</span>
-                                        <span class="text-sm font-bold text-green-700">₹0</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button class="app-btn w-full py-3 rounded-xl text-white font-bold text-sm shadow-md transition-colors duration-500 flex items-center justify-center gap-2">
-                                <i data-lucide="plus-circle" class="w-4 h-4"></i> Book Appointment
-                            </button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- CUSTOM APP -->
+<section id="custom-app" class="py-24 overflow-hidden relative text-white" style="background:var(--ink)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div>
+        <p class="font-mono text-xs uppercase tracking-widest mb-3" style="color:#5FD3E6">One platform</p>
+        <h2 class="font-display text-3xl lg:text-4xl font-semibold mb-6">Infinite identities.</h2>
+        <p class="text-white/60 text-lg mb-8">We run the technology. Patients see <strong class="text-white">you</strong>. Pick a clinic below to see the app repaint itself.</p>
+        <div class="space-y-3">
+          <button onclick="setTheme('blue', 'Neura Dental')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
+            <div class="w-9 h-9 rounded-full mr-4 border-2 border-white" style="background:var(--teal)"></div>
+            <div><h4 class="font-bold group-hover:text-[#5FD3E6]">Neura Dental (default)</h4><p class="text-xs text-white/40">Theme: Clinical Teal</p></div>
+          </button>
+          <button onclick="setTheme('green', 'Smile Care Center')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
+            <div class="w-9 h-9 rounded-full mr-4 border-2 border-white" style="background:var(--mint)"></div>
+            <div><h4 class="font-bold group-hover:text-[#7CE0B8]">Smile Care Center</h4><p class="text-xs text-white/40">Theme: Fresh Mint</p></div>
+          </button>
+          <button onclick="setTheme('amber', 'City Orthodontics')" class="w-full text-left p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition flex items-center group">
+            <div class="w-9 h-9 rounded-full mr-4 border-2 border-white" style="background:var(--amber)"></div>
+            <div><h4 class="font-bold group-hover:text-[#F0B96A]">City Orthodontics</h4><p class="text-xs text-white/40">Theme: Warm Amber</p></div>
+          </button>
         </div>
-    </section>
-  <section id="features" class="py-24 bg-slate-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-slate-900">Everything Your Clinic Needs</h2>
-                <p class="text-slate-500 mt-2">Switch tabs to explore the ecosystem.</p>
+      </div>
+
+      <div class="flex justify-center">
+        <div id="phoneMockup" class="phone-frame theme-blue w-[320px] h-[640px] relative" style="background:var(--paper)">
+          <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#10151C] rounded-b-xl z-20"></div>
+          <div class="app-header h-32 p-6 pt-12 text-white transition-colors duration-500 rounded-b-3xl shadow-lg relative z-10">
+            <div class="flex justify-between items-center mb-4">
+              <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center"><i data-lucide="menu" class="w-5 h-5 text-white"></i></div>
+              <div class="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center"><i data-lucide="bell" class="w-5 h-5 text-white"></i></div>
             </div>
-
-            <div class="flex justify-center mb-10 overflow-x-auto">
-                <div class="bg-white p-1 rounded-xl shadow-sm border border-slate-200 inline-flex">
-                    <button onclick="switchTab('billing')" class="tab-btn active px-6 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-600 transition border border-transparent">
-                        Billing & Finance
-                    </button>
-                    <button onclick="switchTab('comms')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-600 transition border border-transparent">
-                        Communication
-                    </button>
-                    <button onclick="switchTab('clinical')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold text-slate-600 hover:text-blue-600 transition border border-transparent">
-                        Clinical & History
-                    </button>
-                </div>
+            <h3 id="clinicName" class="font-bold text-lg">Neura Dental</h3>
+            <p class="text-xs opacity-80">Welcome, Patient</p>
+          </div>
+          <div class="p-5 space-y-4 overflow-y-auto h-[calc(100%-128px)]">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border hairline flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:var(--paper-2)"><i data-lucide="user" class="text-slate-400"></i></div>
+              <div><h4 class="font-bold" style="color:var(--ink)">Dharmajith Kumar</h4><p class="text-xs" style="color:var(--ink-soft)">ID: SOC-181125</p></div>
             </div>
-
-            <div class="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden min-h-[400px]">
-                
-                <div id="billing" class="tab-content active p-8 md:p-12">
-                    <div class="flex flex-col md:flex-row gap-12 items-center">
-                        <div class="flex-1">
-                            <div class="inline-block p-3 bg-red-100 rounded-lg text-red-600 mb-6">
-                                <i data-lucide="indian-rupee" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4">Smart Invoicing & Revenue Tracking</h3>
-                            <ul class="space-y-4 text-slate-600">
-                                <li class="flex items-start">
-                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-0.5"></i>
-                                    <span><strong>Pending Balance Alerts:</strong> Instantly see who owes money (e.g., ₹1,500 Pending) right on the dashboard.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-0.5"></i>
-                                    <span><strong>Digital Invoices:</strong> Generate professional bills (INV-176...) that can be shared via WhatsApp.</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-green-500 mr-3 mt-0.5"></i>
-                                    <span><strong>Daily Totals:</strong> Auto-calculated revenue summaries (Total Paid vs Pending).</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="flex-1 bg-slate-50 p-6 rounded-2xl border border-slate-100 w-full">
-                            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-                                <div class="bg-slate-50 px-4 py-3 border-b border-slate-100 flex justify-between font-bold text-xs text-slate-500 uppercase">
-                                    <span>Patient</span>
-                                    <span>Status</span>
-                                </div>
-                                <div class="divide-y divide-slate-100">
-                                    <div class="px-4 py-3 flex justify-between items-center">
-                                        <div><p class="font-bold text-sm text-slate-800">Priyanshu</p><p class="text-xs text-slate-400">INV-1768...</p></div>
-                                        <span class="px-2 py-1 bg-red-50 text-red-600 rounded text-xs font-bold">₹1,500 Pending</span>
-                                    </div>
-                                    <div class="px-4 py-3 flex justify-between items-center">
-                                        <div><p class="font-bold text-sm text-slate-800">Abhishek Kr</p><p class="text-xs text-slate-400">INV-1767...</p></div>
-                                        <span class="px-2 py-1 bg-green-50 text-green-600 rounded text-xs font-bold">Paid</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="comms" class="tab-content p-8 md:p-12">
-                    <div class="flex flex-col md:flex-row gap-12 items-center">
-                        <div class="flex-1 order-2 md:order-1">
-                             <div class="bg-white rounded-xl shadow-lg border border-slate-100 p-6 w-full max-w-sm mx-auto">
-                                <div class="flex items-center gap-3 mb-4 border-b border-slate-50 pb-3">
-                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white"><i data-lucide="message-circle" class="w-4 h-4"></i></div>
-                                    <span class="font-bold text-sm">WhatsApp Broadcast</span>
-                                </div>
-                                <div class="space-y-3">
-                                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
-                                        <p class="text-xs font-bold text-slate-500 mb-1">Subject</p>
-                                        <p class="text-sm text-slate-800">Special Dental Checkup Offer 🦷</p>
-                                    </div>
-                                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
-                                        <p class="text-xs text-blue-800">Recipients: 11 Active Patients</p>
-                                    </div>
-                                    <button class="w-full bg-slate-900 text-white py-2 rounded-lg text-sm font-bold">Send Broadcast</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex-1 order-1 md:order-2">
-                             <div class="inline-block p-3 bg-green-100 rounded-lg text-green-600 mb-6">
-                                <i data-lucide="send" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4">Automated Communication</h3>
-                            <p class="text-slate-600 mb-6">
-                                Stop calling patients manually. Our system integrates directly with WhatsApp to handle communication at scale.
-                            </p>
-                            <ul class="space-y-3 text-slate-600">
-                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> <strong>Appointment Reminders:</strong> Reduce no-shows automatically.</li>
-                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> <strong>Promotional Offers:</strong> Send bulk offers to your database.</li>
-                                <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-blue-500 mr-2"></i> <strong>Follow-ups:</strong> Auto-check on patients post-treatment.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="clinical" class="tab-content p-8 md:p-12">
-                    <div class="flex flex-col md:flex-row gap-12 items-center">
-                        <div class="flex-1">
-                             <div class="inline-block p-3 bg-purple-100 rounded-lg text-purple-600 mb-6">
-                                <i data-lucide="activity" class="w-6 h-6"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-slate-900 mb-4">Digital Treatment History</h3>
-                            <p class="text-slate-600 mb-6">
-                                Keep a pristine record of every procedure. Accessible to you for reference, and accessible to the patient via their app (if you choose).
-                            </p>
-                            <div class="bg-yellow-50 p-4 rounded-lg border border-yellow-100 text-sm text-yellow-800">
-                                <strong>Example:</strong> Tooth 20 - Scaling. Diagnosis: Generalized mild gingivitis.
-                            </div>
-                        </div>
-                         <div class="flex-1">
-                            <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm">
-                                <h4 class="font-bold text-purple-700 mb-2">Treatment History (1)</h4>
-                                <div class="border-l-2 border-purple-500 pl-4 py-2">
-                                    <div class="flex justify-between mb-1">
-                                        <span class="font-bold text-slate-800">Scaling</span>
-                                        <span class="text-xs bg-slate-100 px-2 py-0.5 rounded text-slate-600">₹500</span>
-                                    </div>
-                                    <p class="text-xs text-slate-500 mb-2">Jan 24, 2026</p>
-                                    <div class="bg-green-50 p-2 rounded border border-green-100">
-                                        <p class="text-xs text-green-700"><strong>Prescription:</strong> No systemic medication.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-white p-3 rounded-xl shadow-sm border hairline text-center py-6">
+                <i data-lucide="calendar" class="app-accent mx-auto mb-2 w-6 h-6 transition-colors duration-500"></i>
+                <span class="text-xs font-bold" style="color:var(--ink)">Appointments</span>
+              </div>
+              <div class="bg-white p-3 rounded-xl shadow-sm border hairline text-center py-6">
+                <i data-lucide="file-text" class="app-accent mx-auto mb-2 w-6 h-6 transition-colors duration-500"></i>
+                <span class="text-xs font-bold" style="color:var(--ink)">History</span>
+              </div>
             </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border hairline">
+              <h4 class="font-bold mb-3 text-sm" style="color:var(--ink)">Payment Summary</h4>
+              <div class="space-y-2">
+                <div class="flex justify-between p-2 rounded-lg border" style="background:rgba(232,84,106,.08); border-color:rgba(232,84,106,.2)">
+                  <span class="text-xs font-medium" style="color:var(--coral)">Pending</span><span class="text-sm font-bold" style="color:var(--coral)">₹0</span>
+                </div>
+                <div class="flex justify-between p-2 rounded-lg border" style="background:rgba(27,158,118,.08); border-color:rgba(27,158,118,.2)">
+                  <span class="text-xs font-medium" style="color:var(--mint)">Paid</span><span class="text-sm font-bold" style="color:var(--mint)">₹0</span>
+                </div>
+              </div>
+            </div>
+            <button class="app-btn w-full py-3 rounded-xl text-white font-bold text-sm shadow-md transition-colors duration-500 flex items-center justify-center gap-2">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i> Book Appointment
+            </button>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <svg class="w-8 h-8" viewBox="0 0 100 100" fill="none">
-                         <path d="M20 30 C20 10, 40 10, 50 25 C60 10, 80 10, 80 30 C80 60, 65 80, 50 90 C35 80, 20 60, 20 30 Z" stroke="white" stroke-width="6"/>
-                    </svg>
-                    <span class="text-xl font-bold text-white">CrownOs</span>
+<!-- FEATURES -->
+<section id="features" class="py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="font-display text-3xl font-semibold">Everything the front desk touches, in one system</h2>
+      <p class="mt-2" style="color:var(--ink-soft)">Switch tabs to explore the ecosystem.</p>
+    </div>
+
+    <div class="flex justify-center mb-10 overflow-x-auto">
+      <div class="bg-white p-1 rounded-xl shadow-sm border hairline inline-flex">
+        <button onclick="switchTab('billing')" class="tab-btn active px-6 py-2.5 rounded-lg text-sm font-bold transition border border-transparent" style="color:var(--ink-soft)">Billing &amp; Finance</button>
+        <button onclick="switchTab('comms')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition border border-transparent" style="color:var(--ink-soft)">Communication</button>
+        <button onclick="switchTab('clinical')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition border border-transparent" style="color:var(--ink-soft)">Clinical &amp; History</button>
+        <button onclick="switchTab('lab')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition border border-transparent" style="color:var(--ink-soft)">Lab Work</button>
+        <button onclick="switchTab('analytics')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition border border-transparent" style="color:var(--ink-soft)">Analytics</button>
+        <button onclick="switchTab('lab')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition border border-transparent" style="color:var(--ink-soft)">Lab Work</button>
+        <button onclick="switchTab('analytics')" class="tab-btn px-6 py-2.5 rounded-lg text-sm font-bold transition border border-transparent" style="color:var(--ink-soft)">Analytics</button>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl shadow-xl border hairline overflow-hidden min-h-[400px]">
+      <div id="billing" class="tab-content active p-8 md:p-12">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1">
+            <div class="inline-block p-3 rounded-lg mb-6" style="background:rgba(232,84,106,.1); color:var(--coral)"><i data-lucide="indian-rupee" class="w-6 h-6"></i></div>
+            <h3 class="text-2xl font-bold mb-4">Smart invoicing &amp; revenue tracking</h3>
+            <ul class="space-y-4" style="color:var(--ink-soft)">
+              <li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 mr-3 mt-0.5" style="color:var(--mint)"></i><span><strong>Pending balance alerts:</strong> see who owes money right on the dashboard, in real rupees.</span></li>
+              <li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 mr-3 mt-0.5" style="color:var(--mint)"></i><span><strong>Digital invoices:</strong> generate a professional bill and share it over WhatsApp in one tap.</span></li>
+              <li class="flex items-start"><i data-lucide="check-circle-2" class="w-5 h-5 mr-3 mt-0.5" style="color:var(--mint)"></i><span><strong>Patient booking link:</strong> share one link and let patients book themselves.</span></li>
+            </ul>
+          </div>
+          <div class="flex-1 p-6 rounded-2xl border hairline w-full" style="background:var(--paper)">
+            <div class="bg-white rounded-xl shadow-sm border hairline overflow-hidden">
+              <div class="px-4 py-3 border-b hairline flex justify-between font-bold text-xs uppercase" style="background:var(--paper); color:var(--ink-soft)"><span>Patient</span><span>Status</span></div>
+              <div class="divide-y hairline">
+                <div class="px-4 py-3 flex justify-between items-center">
+                  <div><p class="font-bold text-sm">Priyanshu</p><p class="text-xs" style="color:var(--ink-soft)">INV-1768...</p></div>
+                  <span class="px-2 py-1 rounded text-xs font-bold" style="background:rgba(232,84,106,.1); color:var(--coral)">₹1,500 Pending</span>
                 </div>
-                <div class="text-sm">
-                    &copy; 2026 CrownOs. All rights reserved.
+                <div class="px-4 py-3 flex justify-between items-center">
+                  <div><p class="font-bold text-sm">Abhishek Kr</p><p class="text-xs" style="color:var(--ink-soft)">INV-1767...</p></div>
+                  <span class="px-2 py-1 rounded text-xs font-bold" style="background:rgba(27,158,118,.1); color:var(--mint)">Paid</span>
                 </div>
-                <div class="flex gap-4">
-                    <a href="mailto: crownos.dental@gmail.com" class="hover:text-white transition"><i data-lucide="mail" class="w-5 h-5"></i></a>
-                    <a href="https://wa.me/919264248108" class="hover:text-white transition"><i data-lucide="phone" class="w-5 h-5"></i></a>
-                </div>
+              </div>
             </div>
-            <div class="mt-8 text-center text-xs text-slate-600">
-                SaaS for Dental Professionals. Streamlining appointments, billing, and patient engagement & patient Retention.
-            </div>
+          </div>
         </div>
-    </footer>
+      </div>
 
-    <a href="https://wa.me/919264248108" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-2xl hover:bg-green-600 transition z-50 hover:scale-110 transform duration-200">
-        <i data-lucide="message-circle" class="w-6 h-6"></i>
-    </a>
+      <div id="comms" class="tab-content p-8 md:p-12">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1 order-2 md:order-1">
+            <div class="bg-white rounded-xl shadow-lg border hairline p-6 w-full max-w-sm mx-auto">
+              <div class="flex items-center gap-3 mb-4 border-b hairline pb-3">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-white" style="background:#25D366"><svg viewBox="0 0 32 32" fill="white" class="w-4 h-4"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.623.86 5.045 2.316 7.01L4.6 27.6l5.723-1.687A11.94 11.94 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm5.4 13.44c-.296-.148-1.75-.864-2.022-.963-.272-.099-.47-.148-.667.148-.198.297-.766.963-.94 1.161-.173.198-.346.223-.642.075-.297-.148-1.253-.462-2.386-1.472-.882-.787-1.478-1.76-1.651-2.057-.173-.297-.019-.457.13-.605.134-.133.297-.346.446-.52.148-.173.198-.297.297-.495.099-.198.05-.372-.025-.52-.074-.148-.667-1.607-.914-2.202-.24-.578-.485-.5-.667-.51l-.568-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.478 0 1.462 1.065 2.874 1.213 3.072.148.198 2.096 3.2 5.08 4.487.71.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.75-.716 1.998-1.408.247-.693.247-1.286.173-1.409-.074-.123-.272-.198-.568-.346z"/></svg></div>
+                <span class="font-bold text-sm">WhatsApp Broadcast</span>
+              </div>
+              <div class="space-y-3">
+                <div class="p-3 rounded-lg border hairline" style="background:var(--paper)">
+                  <p class="text-xs font-bold mb-1" style="color:var(--ink-soft)">AI Message Generator</p>
+                  <p class="text-sm">Special Dental Checkup Offer 🦷</p>
+                </div>
+                <div class="p-3 rounded-lg border" style="background:rgba(12,133,153,.08); border-color:rgba(12,133,153,.2)">
+                  <p class="text-xs" style="color:var(--teal-deep)">Recipients: 11 active patients</p>
+                </div>
+                <button class="w-full text-white py-2 rounded-lg text-sm font-bold" style="background:var(--ink)">Send Broadcast</button>
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 order-1 md:order-2">
+            <div class="inline-block p-3 rounded-lg mb-6" style="background:rgba(27,158,118,.1); color:var(--mint)"><i data-lucide="send" class="w-6 h-6"></i></div>
+            <h3 class="text-2xl font-bold mb-4">Automated communication</h3>
+            <p class="mb-6" style="color:var(--ink-soft)">Stop calling patients manually. CrownOs writes and sends WhatsApp messages at the moments that matter.</p>
+            <ul class="space-y-3" style="color:var(--ink-soft)">
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2" style="color:var(--teal)"></i><strong>Appointment reminders:</strong>&nbsp;reduce no-shows automatically.</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2" style="color:var(--teal)"></i><strong>AI-drafted offers:</strong>&nbsp;generate a broadcast in one click, then send.</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2" style="color:var(--teal)"></i><strong>Follow-ups:</strong>&nbsp;auto-check on patients post-treatment.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <script>
-        // Init Icons
-        lucide.createIcons();
+      <div id="clinical" class="tab-content p-8 md:p-12">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1">
+            <div class="inline-block p-3 rounded-lg mb-6" style="background:rgba(201,122,26,.1); color:var(--amber)"><i data-lucide="activity" class="w-6 h-6"></i></div>
+            <h3 class="text-2xl font-bold mb-4">Digital treatment history</h3>
+            <p class="mb-6" style="color:var(--ink-soft)">Every procedure recorded once, accessible to you for reference and to the patient in their app, if you choose to share it.</p>
+            <div class="p-4 rounded-lg border text-sm" style="background:rgba(201,122,26,.08); border-color:rgba(201,122,26,.2); color:var(--amber)">
+              <strong>Example:</strong> Tooth 20 — Scaling. Diagnosis: generalized mild gingivitis.
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="bg-white border hairline rounded-xl p-6 shadow-sm">
+              <h4 class="font-bold mb-2" style="color:var(--teal-deep)">Treatment History (1)</h4>
+              <div class="border-l-2 pl-4 py-2" style="border-color:var(--amber)">
+                <div class="flex justify-between mb-1"><span class="font-bold">Scaling</span><span class="text-xs px-2 py-0.5 rounded" style="background:var(--paper); color:var(--ink-soft)">₹500</span></div>
+                <p class="text-xs mb-2" style="color:var(--ink-soft)">Jan 24, 2026</p>
+                <div class="p-2 rounded border" style="background:rgba(27,158,118,.08); border-color:rgba(27,158,118,.2)">
+                  <p class="text-xs" style="color:var(--mint)"><strong>Prescription:</strong> no systemic medication.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        // Theme Switcher Logic
-        function setTheme(themeName, clinicNameText, docName) {
-            const mockup = document.getElementById('phoneMockup');
-            const nameLabel = document.getElementById('clinicName');
-            
-            // Remove old classes
-            mockup.classList.remove('theme-blue', 'theme-green', 'theme-purple');
-            // Add new class
-            mockup.classList.add(`theme-${themeName}`);
-            
-            // Change Text
-            nameLabel.innerText = clinicNameText;
-            nameLabel.classList.add('animate-pulse');
-            setTimeout(() => nameLabel.classList.remove('animate-pulse'), 500);
-        }
 
-        // Tab Switcher Logic
-        function switchTab(tabId) {
-            // Buttons
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Content
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-        }
-    </script>
+      <div id="lab" class="tab-content p-8 md:p-12">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1">
+            <div class="inline-block p-3 rounded-lg mb-6" style="background:rgba(12,133,153,.1); color:var(--teal)"><i data-lucide="flask-conical" class="w-6 h-6"></i></div>
+            <h3 class="text-2xl font-bold mb-4">Lab work, tracked door to door</h3>
+            <p class="mb-6" style="color:var(--ink-soft)">Every case sent out is a case that can come back late. CrownOs tracks each one from dispatch to fit, so nothing sits forgotten at the lab.</p>
+            <ul class="space-y-3" style="color:var(--ink-soft)">
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2" style="color:var(--teal)"></i>Case status at a glance: sent, in fabrication, ready, fitted</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2" style="color:var(--teal)"></i>Expected return date with automatic overdue flags</li>
+              <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 mr-2" style="color:var(--teal)"></i>Linked to the patient's invoice and treatment plan</li>
+            </ul>
+          </div>
+          <div class="flex-1 w-full">
+            <div class="bg-white rounded-xl border hairline shadow-sm overflow-hidden">
+              <div class="px-4 py-3 border-b hairline flex justify-between font-bold text-xs uppercase" style="background:var(--paper); color:var(--ink-soft)"><span>Case</span><span>Status</span></div>
+              <div class="divide-y hairline text-sm">
+                <div class="px-4 py-3 flex justify-between items-center">
+                  <div><p class="font-bold">Zirconia Crown — Meera J.</p><p class="text-xs" style="color:var(--ink-soft)">Sent to Apex Lab &middot; Aug 6</p></div>
+                  <span class="px-2 py-1 rounded text-xs font-bold" style="background:rgba(201,122,26,.1); color:var(--amber)">In Fabrication</span>
+                </div>
+                <div class="px-4 py-3 flex justify-between items-center">
+                  <div><p class="font-bold">Denture — Ramesh V.</p><p class="text-xs" style="color:var(--ink-soft)">Sent to Apex Lab &middot; Jul 29</p></div>
+                  <span class="px-2 py-1 rounded text-xs font-bold" style="background:rgba(232,84,106,.1); color:var(--coral)">2 Days Overdue</span>
+                </div>
+                <div class="px-4 py-3 flex justify-between items-center">
+                  <div><p class="font-bold">Bridge — Anita S.</p><p class="text-xs" style="color:var(--ink-soft)">Sent to Precision Dental &middot; Aug 2</p></div>
+                  <span class="px-2 py-1 rounded text-xs font-bold" style="background:rgba(27,158,118,.1); color:var(--mint)">Ready for Pickup</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="analytics" class="tab-content p-8 md:p-12">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="flex-1">
+            <div class="inline-block p-3 rounded-lg mb-6" style="background:rgba(27,158,118,.1); color:var(--mint)"><i data-lucide="bar-chart-3" class="w-6 h-6"></i></div>
+            <h3 class="text-2xl font-bold mb-4">Analytics that name the problem</h3>
+            <p class="mb-6" style="color:var(--ink-soft)">Revenue, new patients, and missed-appointment rate, tracked week over week, so a slow month shows up before it becomes a slow quarter.</p>
+            <div class="p-4 rounded-lg border text-sm" style="background:rgba(27,158,118,.08); border-color:rgba(27,158,118,.2); color:var(--mint)">
+              <strong>Benchmarked:</strong> below-15% missed-appointment rate and &#8377;3,000+ average revenue per patient are flagged as healthy.
+            </div>
+          </div>
+          <div class="flex-1 w-full bg-[#0F1720] rounded-xl p-6">
+            <div class="flex justify-between items-baseline mb-5">
+              <span class="text-white/40 text-xs font-mono uppercase tracking-widest">Revenue — last 6 weeks</span>
+              <span id="analytics-total" class="font-mono text-white text-sm">&#8377;0</span>
+            </div>
+            <div id="analytics-chart" class="flex items-end gap-3 h-40"></div>
+            <div id="analytics-labels" class="flex gap-3 mt-2 text-[10px] font-mono text-white/30"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATED MESSAGING -->
+<section id="messaging" class="py-24 bg-white border-t border-b hairline">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mb-14">
+      <p class="font-mono text-xs uppercase tracking-widest mb-3" style="color:var(--teal-deep)">Communication</p>
+      <h2 class="font-display text-3xl lg:text-4xl font-semibold mb-4">One inbox for every patient conversation.</h2>
+      <p style="color:var(--ink-soft)">Reminders, follow-ups, and broadcasts all run through the same WhatsApp thread you already see on the dashboard.</p>
+    </div>
+
+    <div class="grid lg:grid-cols-5 gap-6">
+      <div class="lg:col-span-3 rounded-2xl border hairline overflow-hidden shadow-sm">
+        <div class="grid grid-cols-5 h-[420px]">
+          <div class="col-span-2 border-r hairline overflow-y-auto" style="background:var(--paper)">
+            <div class="p-3 border-b hairline"><div class="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-white border hairline text-xs" style="color:var(--ink-soft)"><i data-lucide="user" class="w-3.5 h-3.5"></i> Search patients&hellip;</div></div>
+            <div id="patient-list"></div>
+          </div>
+          <div class="col-span-3 flex flex-col bg-white">
+            <div class="px-4 py-3 border-b hairline flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background:var(--teal)">MJ</div>
+              <div><p class="font-bold text-sm">Meera J.</p><p class="text-[11px]" style="color:var(--ink-soft)">Active on WhatsApp</p></div>
+            </div>
+            <div id="chat-thread" class="flex-1 p-4 space-y-2 overflow-y-auto text-sm"></div>
+            <div class="p-3 border-t hairline flex items-center gap-2">
+              <div class="flex-1 px-3 py-2 rounded-full border hairline text-xs" style="color:var(--ink-soft); background:var(--paper)">Type a message&hellip;</div>
+              <div class="w-8 h-8 rounded-full flex items-center justify-center text-white" style="background:var(--teal)"><i data-lucide="send" class="w-3.5 h-3.5"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2 rounded-2xl border hairline p-6 shadow-sm" style="background:var(--paper)">
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 rounded-full flex items-center justify-center text-white" style="background:#25D366"><svg viewBox="0 0 32 32" fill="white" class="w-4 h-4"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.623.86 5.045 2.316 7.01L4.6 27.6l5.723-1.687A11.94 11.94 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm5.4 13.44c-.296-.148-1.75-.864-2.022-.963-.272-.099-.47-.148-.667.148-.198.297-.766.963-.94 1.161-.173.198-.346.223-.642.075-.297-.148-1.253-.462-2.386-1.472-.882-.787-1.478-1.76-1.651-2.057-.173-.297-.019-.457.13-.605.134-.133.297-.346.446-.52.148-.173.198-.297.297-.495.099-.198.05-.372-.025-.52-.074-.148-.667-1.607-.914-2.202-.24-.578-.485-.5-.667-.51l-.568-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.478 0 1.462 1.065 2.874 1.213 3.072.148.198 2.096 3.2 5.08 4.487.71.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.75-.716 1.998-1.408.247-.693.247-1.286.173-1.409-.074-.123-.272-.198-.568-.346z"/></svg></div>
+          <span class="font-bold text-sm">Broadcast a promotion</span>
+        </div>
+        <p class="text-xs mb-4" style="color:var(--ink-soft)">Subject: <span class="font-medium" style="color:var(--ink)">Special Dental Checkup Offer &#127871;</span></p>
+        <div class="bg-white rounded-lg border hairline p-3 mb-4">
+          <p class="text-xs" style="color:var(--teal-deep)">Recipients: 11 active patients</p>
+        </div>
+        <button id="broadcast-btn" onclick="runBroadcast()" class="w-full text-white py-2.5 rounded-lg text-sm font-bold flex items-center justify-center gap-2" style="background:var(--ink)">
+          <i data-lucide="send" class="w-4 h-4"></i> Send Broadcast
+        </button>
+        <div id="broadcast-progress" class="mt-4 hidden">
+          <div class="w-full h-1.5 rounded-full overflow-hidden" style="background:var(--paper-2)"><div id="broadcast-bar" class="h-full rounded-full transition-all duration-300" style="background:var(--mint); width:0%"></div></div>
+          <p id="broadcast-status" class="text-[11px] font-mono mt-2" style="color:var(--ink-soft)">Sending&hellip;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="text-white py-12 border-t border-white/10" style="background:var(--ink)">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2">
+        <img src="data:image/png;base64,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" alt="CrownOs logo" class="w-8 h-8 rounded-lg">
+        <span class="text-xl font-bold">CrownOs</span>
+      </div>
+      <div class="text-sm text-white/50">&copy; 2026 CrownOs. All rights reserved.</div>
+      <div class="flex gap-4">
+        <a href="https://www.instagram.com/crownos.in?igsh=MWZIMG90Y2FIYzI4aw" target="_blank" rel="noopener" aria-label="CrownOs on Instagram" class="w-9 h-9 rounded-full ig-gradient flex items-center justify-center hover:opacity-90 transition">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="mailto:crownos.dental@gmail.com" class="hover:text-white transition text-white/60"><i data-lucide="mail" class="w-5 h-5"></i></a>
+        <a href="https://wa.me/919264248108" aria-label="Chat on WhatsApp" class="hover:text-[#25D366] transition text-white/60">
+          <svg viewBox="0 0 32 32" fill="currentColor" class="w-5 h-5"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.623.86 5.045 2.316 7.01L4.6 27.6l5.723-1.687A11.94 11.94 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm5.4 13.44c-.296-.148-1.75-.864-2.022-.963-.272-.099-.47-.148-.667.148-.198.297-.766.963-.94 1.161-.173.198-.346.223-.642.075-.297-.148-1.253-.462-2.386-1.472-.882-.787-1.478-1.76-1.651-2.057-.173-.297-.019-.457.13-.605.134-.133.297-.346.446-.52.148-.173.198-.297.297-.495.099-.198.05-.372-.025-.52-.074-.148-.667-1.607-.914-2.202-.24-.578-.485-.5-.667-.51l-.568-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.478 0 1.462 1.065 2.874 1.213 3.072.148.198 2.096 3.2 5.08 4.487.71.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.75-.716 1.998-1.408.247-.693.247-1.286.173-1.409-.074-.123-.272-.198-.568-.346z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="mt-8 text-center text-xs text-white/30">SaaS for dental professionals. Billing, appointments, patient engagement, and retention — run from one screen.</div>
+  </div>
+</footer>
+
+<div class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+  <a href="https://www.instagram.com/crownos.in?igsh=MWZIMG90Y2FIYzI4aw" target="_blank" rel="noopener" aria-label="CrownOs on Instagram" class="social-float ig-gradient text-white p-4 rounded-full shadow-2xl">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+  </a>
+  <a href="https://wa.me/919264248108" target="_blank" aria-label="Chat on WhatsApp" class="social-float text-white p-4 rounded-full shadow-2xl" style="background:#25D366">
+    <svg viewBox="0 0 32 32" fill="white" class="w-6 h-6"><path d="M16.001 3C9.373 3 4 8.373 4 15c0 2.623.86 5.045 2.316 7.01L4.6 27.6l5.723-1.687A11.94 11.94 0 0 0 16.001 27C22.628 27 28 21.627 28 15S22.628 3 16.001 3zm5.4 13.44c-.296-.148-1.75-.864-2.022-.963-.272-.099-.47-.148-.667.148-.198.297-.766.963-.94 1.161-.173.198-.346.223-.642.075-.297-.148-1.253-.462-2.386-1.472-.882-.787-1.478-1.76-1.651-2.057-.173-.297-.019-.457.13-.605.134-.133.297-.346.446-.52.148-.173.198-.297.297-.495.099-.198.05-.372-.025-.52-.074-.148-.667-1.607-.914-2.202-.24-.578-.485-.5-.667-.51l-.568-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.017-1.04 2.478 0 1.462 1.065 2.874 1.213 3.072.148.198 2.096 3.2 5.08 4.487.71.306 1.263.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.75-.716 1.998-1.408.247-.693.247-1.286.173-1.409-.074-.123-.272-.198-.568-.346z"/></svg>
+  </a>
+</div>
+
+<script>
+/* Self-contained icon set — no external CDN, so icons can never fail to load */
+const ICON_PATHS = {
+  'activity':'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+  'arrow-down':'<line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/>',
+  'bell':'<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+  'calendar':'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  'check':'<polyline points="20 6 9 17 4 12"/>',
+  'check-circle-2':'<circle cx="12" cy="12" r="10"/><polyline points="16 10 10.5 15.5 8 13"/>',
+  'clipboard-list':'<path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/>',
+  'file-text':'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+  'indian-rupee':'<path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M6 13h3"/><path d="M9 13c6.667 0 6.667-10 0-10"/>',
+  'mail':'<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+  'menu':'<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
+  'message-circle':'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>',
+  'play-circle':'<circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>',
+  'plus-circle':'<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>',
+  'send':'<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',
+  'smartphone':'<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
+  'trending-up':'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+  'user':'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  'user-check':'<path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/>',
+  'zap':'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  'flask-conical':'<path d="M10 2v6.5L4.5 19a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 8.5V2"/><path d="M8.5 2h7"/><path d="M7 16h10"/>',
+  'bar-chart-3':'<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+  'circle-check':'<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>'
+};
+function renderIcons(){
+  document.querySelectorAll('[data-lucide]').forEach(el => {
+    const name = el.getAttribute('data-lucide');
+    const inner = ICON_PATHS[name];
+    if(!inner) return;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 24 24');
+    svg.setAttribute('fill','none');
+    svg.setAttribute('stroke','currentColor');
+    svg.setAttribute('stroke-width','2');
+    svg.setAttribute('stroke-linecap','round');
+    svg.setAttribute('stroke-linejoin','round');
+    for(const attr of el.attributes){
+      if(attr.name !== 'data-lucide') svg.setAttribute(attr.name, attr.value);
+    }
+    svg.innerHTML = inner;
+    el.replaceWith(svg);
+  });
+}
+renderIcons();
+
+function setTheme(themeName, clinicNameText){
+  const mockup = document.getElementById('phoneMockup');
+  const nameLabel = document.getElementById('clinicName');
+  mockup.classList.remove('theme-blue','theme-green','theme-amber');
+  mockup.classList.add(`theme-${themeName}`);
+  nameLabel.innerText = clinicNameText;
+}
+
+function switchTab(tabId){
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+}
+
+/* ---- Live ledger simulation ---- */
+(function(){
+  const feed = document.getElementById('feed');
+  const events = [
+    {tag:'BOOKED', cls:'tag-book', text:'Priya S. booked scaling — Tue 4:30 PM'},
+    {tag:'PAID',   cls:'tag-pay',  text:'Invoice INV-1772 marked paid — ₹2,200'},
+    {tag:'SENT',   cls:'tag-msg',  text:'Reminder sent to Rohit K. via WhatsApp'},
+    {tag:'PLAN',   cls:'tag-plan', text:'Crown treatment accepted — Meera J.'},
+    {tag:'BOOKED', cls:'tag-book', text:'Walk-in checkup added — Arjun P.'},
+    {tag:'PAID',   cls:'tag-pay',  text:'Pending balance cleared — Sana R.'},
+    {tag:'SENT',   cls:'tag-msg',  text:'Reactivation message sent to 6 dormant patients'},
+    {tag:'PLAN',   cls:'tag-plan', text:'Root canal proposed — awaiting decision'}
+  ];
+  let i = 0;
+  function addRow(){
+    const e = events[i % events.length];
+    const row = document.createElement('div');
+    row.className = 'ledger-row';
+    const time = new Date().toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'});
+    row.innerHTML = `
+      <div class="flex items-center gap-3 min-w-0">
+        <span class="ledger-tag ${e.cls} font-mono shrink-0">${e.tag}</span>
+        <span class="text-white/80 text-sm truncate">${e.text}</span>
+      </div>
+      <span class="text-white/30 text-xs font-mono shrink-0 ml-3">${time}</span>`;
+    feed.prepend(row);
+    while(feed.children.length > 5) feed.removeChild(feed.lastChild);
+    i++;
+  }
+  for(let k=0;k<4;k++) setTimeout(addRow, k*260);
+  setInterval(addRow, 3200);
+
+  function countUp(el, from, to, prefix='', suffix='', duration=1400){
+    const start = performance.now();
+    function step(now){
+      const p = Math.min(1, (now-start)/duration);
+      const val = Math.round(from + (to-from) * (1 - Math.pow(1-p,3)));
+      el.textContent = prefix + val.toLocaleString('en-IN') + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  countUp(document.getElementById('stat-revenue'), 0, 18400, '₹');
+  countUp(document.getElementById('stat-appts'), 0, 9);
+  countUp(document.getElementById('stat-collection'), 0, 84, '', '%');
+
+  setInterval(() => {
+    const revEl = document.getElementById('stat-revenue');
+    const current = parseInt(revEl.textContent.replace(/[^\d]/g,'')) || 0;
+    countUp(revEl, current, current + Math.floor(Math.random()*900+200), '₹', '', 900);
+  }, 6000);
+})();
+
+/* ---- Analytics tab: animated bar chart simulation ---- */
+(function(){
+  const chart = document.getElementById('analytics-chart');
+  const labelsEl = document.getElementById('analytics-labels');
+  const totalEl = document.getElementById('analytics-total');
+  if(!chart) return;
+  const weeks = [
+    {label:'Wk 1', value:9800},
+    {label:'Wk 2', value:12400},
+    {label:'Wk 3', value:10600},
+    {label:'Wk 4', value:15200},
+    {label:'Wk 5', value:13100},
+    {label:'Wk 6', value:18400}
+  ];
+  const max = Math.max(...weeks.map(w => w.value));
+  let built = false;
+  function build(){
+    if(built) return;
+    built = true;
+    chart.innerHTML = '';
+    labelsEl.innerHTML = '';
+    let total = 0;
+    weeks.forEach((w, i) => {
+      const bar = document.createElement('div');
+      bar.className = 'flex-1 rounded-t-md';
+      bar.style.background = i === weeks.length - 1 ? 'var(--teal)' : 'rgba(12,133,153,.35)';
+      bar.style.height = '0%';
+      bar.style.transition = 'height 900ms cubic-bezier(.2,.7,.2,1)';
+      bar.style.transitionDelay = (i * 90) + 'ms';
+      chart.appendChild(bar);
+      const lbl = document.createElement('span');
+      lbl.className = 'flex-1 text-center';
+      lbl.textContent = w.label;
+      labelsEl.appendChild(lbl);
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        bar.style.height = Math.round((w.value / max) * 100) + '%';
+      }));
+      total += w.value;
+    });
+    let shown = 0;
+    const start = performance.now();
+    function step(now){
+      const p = Math.min(1, (now-start)/1200);
+      shown = Math.round(total * (1 - Math.pow(1-p,3)));
+      totalEl.textContent = '₹' + shown.toLocaleString('en-IN');
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const analyticsBtn = document.querySelector('button[onclick="switchTab(\'analytics\')"]');
+  if(analyticsBtn) analyticsBtn.addEventListener('click', build);
+})();
+
+/* ---- Integrated chat: patient list + live message thread ---- */
+(function(){
+  const list = document.getElementById('patient-list');
+  const thread = document.getElementById('chat-thread');
+  if(!list || !thread) return;
+
+  const patients = [
+    {initials:'MJ', name:'Meera J.', preview:'Sure, 4:30 works for me', active:true},
+    {initials:'RK', name:'Rohit K.', preview:'Reminder sent — awaiting reply'},
+    {initials:'SR', name:'Sana R.', preview:'Thank you, see you then!'},
+    {initials:'AP', name:'Arjun P.', preview:'Can I reschedule to Friday?'}
+  ];
+  list.innerHTML = patients.map(p => `
+    <div class="flex items-center gap-3 px-3 py-3 border-b hairline cursor-default ${p.active ? '' : 'opacity-70'}">
+      <div class="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0" style="background:${p.active ? 'var(--teal)' : '#9CA6B4'}">${p.initials}</div>
+      <div class="min-w-0">
+        <p class="font-bold text-xs truncate">${p.name}</p>
+        <p class="text-[11px] truncate" style="color:var(--ink-soft)">${p.preview}</p>
+      </div>
+    </div>`).join('');
+
+  const script = [
+    {from:'clinic', text:'Hi Meera, this is a reminder for your scaling appointment tomorrow at 4:30 PM.'},
+    {from:'patient', text:'Sure, 4:30 works for me 🙂'},
+    {from:'clinic', text:'Great — see you then! Reply here if anything changes.'}
+  ];
+  let i = 0;
+  function bubble(msg){
+    const row = document.createElement('div');
+    row.className = 'flex ' + (msg.from === 'clinic' ? 'justify-end' : 'justify-start');
+    const b = document.createElement('div');
+    b.className = 'max-w-[75%] px-3 py-2 rounded-2xl text-xs leading-relaxed';
+    if(msg.from === 'clinic'){
+      b.style.background = 'var(--teal)'; b.style.color = '#fff'; b.style.borderBottomRightRadius = '4px';
+    } else {
+      b.style.background = 'var(--paper-2)'; b.style.color = 'var(--ink)'; b.style.borderBottomLeftRadius = '4px';
+    }
+    b.textContent = msg.text;
+    row.appendChild(b);
+    thread.appendChild(row);
+    thread.scrollTop = thread.scrollHeight;
+  }
+  function playScript(){
+    if(i >= script.length){ i = 0; setTimeout(() => { thread.innerHTML=''; playScript(); }, 4000); return; }
+    bubble(script[i]);
+    i++;
+    setTimeout(playScript, 1500);
+  }
+  const messagingBtn = document.getElementById('messaging');
+  let started = false;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting && !started){ started = true; playScript(); } });
+  }, {threshold:0.3});
+  if(messagingBtn) io.observe(messagingBtn);
+})();
+
+/* ---- Broadcast send simulation ---- */
+function runBroadcast(){
+  const btn = document.getElementById('broadcast-btn');
+  const progress = document.getElementById('broadcast-progress');
+  const bar = document.getElementById('broadcast-bar');
+  const status = document.getElementById('broadcast-status');
+  if(!btn || btn.disabled) return;
+  btn.disabled = true;
+  btn.style.opacity = '0.6';
+  progress.classList.remove('hidden');
+  let sent = 0;
+  const totalRecipients = 11;
+  const timer = setInterval(() => {
+    sent++;
+    const pct = Math.round((sent/totalRecipients)*100);
+    bar.style.width = pct + '%';
+    status.textContent = sent < totalRecipients ? `Sending… ${sent}/${totalRecipients} delivered` : 'Sent to all 11 patients';
+    if(sent >= totalRecipients){
+      clearInterval(timer);
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        progress.classList.add('hidden');
+        bar.style.width = '0%';
+      }, 2500);
+    }
+  }, 260);
+}
+</script>
 </body>
-  </html>
+</html>
